@@ -1,7 +1,17 @@
+import { GameCard } from "@/modules/components/GameCard/GameCard"
+
 export default function Home() {
   return (
-    <main className="bg-dark-str min-h-[100vh] w-screen text-light-str">
-      <div className="flex flex-col max-w-[1022px] w-full mx-auto pt-11">
+    <main className="bg-white min-h-[100vh] w-screen text-dark-str">
+      <div className="w-full bg-dark-str z-[900] fixed top-0">
+        <div className="max-w-[1022px] mx-auto py-4">
+          <div className="flex items-center gap-x-1">
+            <img src="/assets/logo.svg" alt="" className="h-[28px]" />
+            <span className="text-white text-lg">Stardusteight</span>
+          </div>
+        </div>
+      </div>
+      <div className="flex flex-col max-w-[1022px] mt-[50px] mb-[100px] w-full mx-auto pt-11">
         <h1 className="text-3xl font-semibold mb-11">
           Personalized Stats and Insights Powered by Billions of Matches
         </h1>
@@ -18,50 +28,21 @@ export default function Home() {
         </div>
         <div className="flex flex-col">
           <h3 className="text-lg font-semibold mb-6">All Games</h3>
-          <div className="flex gap-x-[10px] gap-y-7 flex-wrap">
-            <img
-              src="https://upload.wikimedia.org/wikipedia/en/b/b0/Persona_5_cover_art.jpg"
-              alt=""
-              className="w-[196px] h-[265px] rounded object-cover border border-dark-low/20 shadow-sm shadow-black/20"
-            />{" "}
-            <img
-              src="https://upload.wikimedia.org/wikipedia/en/b/b0/Persona_5_cover_art.jpg"
-              alt=""
-              className="w-[196px] h-[265px] rounded object-cover border border-dark-low/20 shadow-sm shadow-black/20"
-            />{" "}
-            <img
-              src="https://upload.wikimedia.org/wikipedia/en/b/b0/Persona_5_cover_art.jpg"
-              alt=""
-              className="w-[196px] h-[265px] rounded object-cover border border-dark-low/20 shadow-sm shadow-black/20"
-            />{" "}
-            <img
-              src="https://upload.wikimedia.org/wikipedia/en/b/b0/Persona_5_cover_art.jpg"
-              alt=""
-              className="w-[196px] h-[265px] rounded object-cover border border-dark-low/20 shadow-sm shadow-black/20"
-            />{" "}
-            <img
-              src="https://upload.wikimedia.org/wikipedia/en/b/b0/Persona_5_cover_art.jpg"
-              alt=""
-              className="w-[196px] h-[265px] rounded object-cover border border-dark-low/20 shadow-sm shadow-black/20"
-            />{" "}
-            <img
-              src="https://upload.wikimedia.org/wikipedia/en/b/b0/Persona_5_cover_art.jpg"
-              alt=""
-              className="w-[196px] h-[265px] rounded object-cover border border-dark-low/20 shadow-sm shadow-black/20"
-            />{" "}
-            <img
-              src="https://upload.wikimedia.org/wikipedia/en/b/b0/Persona_5_cover_art.jpg"
-              alt=""
-              className="w-[196px] h-[265px] rounded object-cover border border-dark-low/20 shadow-sm shadow-black/20"
-            />{" "}
-            <img
-              src="https://upload.wikimedia.org/wikipedia/en/b/b0/Persona_5_cover_art.jpg"
-              alt=""
-              className="w-[196px] h-[265px] rounded object-cover border border-dark-low/20 shadow-sm shadow-black/20"
-            />
+          <div className="grid grid-cols-5 gap-x-[10px] gap-y-7 flex-wrap">
+            <GameCard />
+            <GameCard />
+            <GameCard />
+            <GameCard />
+            <GameCard />
+            <GameCard />
+            <GameCard />
+            <GameCard />
+            <GameCard />
+            <GameCard />
           </div>
         </div>
       </div>
+      <div className="w-full h-[4px] bg-dark-str" />
     </main>
   )
 }
