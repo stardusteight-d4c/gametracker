@@ -1,5 +1,13 @@
 import { GameCard } from "@/modules/components/GameCard/GameCard"
-import { CircleUserRound, Search } from "lucide-react"
+import {
+  ChevronDown,
+  CircleUserRound,
+  Instagram,
+  LogIn,
+  Mail,
+  Search,
+  Twitter,
+} from "lucide-react"
 
 export default function Home() {
   return (
@@ -18,10 +26,12 @@ export default function Home() {
             />
             <Search className="absolute left-1 top-1/2 -translate-y-1/2 text-light-str/50" />
           </div>
-          <button className="flex items-center h-[29px] px-3 gap-x-1 hover:scale-105 transition-all text-light-str bg-gradient-to-t from-[#D5224E] to-[#FF003F] rounded">
-            <CircleUserRound className="w-[20px] cursor-pointer" />
-            Sign In
-          </button>
+          <div className="flex items-center gap-x-1">
+            <button className="flex items-center h-[29px] px-3 gap-x-1 hover:scale-105 transition-all text-light-str bg-gradient-to-t from-[#D5224E] to-[#FF003F] rounded">
+              <CircleUserRound className="w-[20px] cursor-pointer" />
+              Sign In
+            </button>
+          </div>
         </div>
       </div>
       <div className="flex flex-col max-w-[1022px] mt-[50px] mb-[100px] w-full mx-auto pt-11">
@@ -43,12 +53,25 @@ export default function Home() {
           </div>
           <div className="w-0 h-12 border-l border-l-dark-low/30 mx-9" />
           <div className="flex flex-col">
-            <span className="text-lg font-semibold">500+</span>
-            <span className="text-sm">Social Network</span>
+            <span className="text-lg font-semibold flex items-center gap-x-2">
+              <Instagram className="h-7 cursor-pointer" />
+              <Twitter className="h-7 cursor-pointer" />
+              <Mail className="h-7 cursor-pointer" />
+            </span>
+            <span className="text-sm">Connect</span>
           </div>
         </div>
         <div className="flex flex-col">
-          <h3 className="text-lg font-semibold mb-6">All Games</h3>
+          <div className="mb-6 flex items-center justify-between">
+            <div className="flex items-center gap-x-4">
+              <h3 className="text-lg font-semibold ">My games</h3>
+              <span className="text-sm text-dark-low cursor-pointer font-normal -mb-[2px] flex items-center">
+                Sort by post date <ChevronDown className="h-[18px]" />
+              </span>
+            </div>
+            <h3 className="text-base font-semibold cursor-pointer underline text-dark-mid/80">View all</h3>
+
+          </div>
           <div className="grid grid-cols-5 gap-x-[10px] gap-y-7 flex-wrap">
             <GameCard />
             <GameCard />
