@@ -40,30 +40,37 @@ export default function Home() {
             creating captivating worlds.
           </span>
         </h1>
-        <div className="flex mb-8">
-          <div className="flex flex-col">
-            <span className="text-lg font-semibold">15+</span>
-            <span className="text-sm">Games</span>
+        <div className="flex mb-8 items-center justify-between">
+          <div className="flex">
+            <div className="flex flex-col">
+              <span className="text-lg font-semibold">15+</span>
+              <span className="text-sm">Games</span>
+            </div>
+            <div className="w-0 h-12 border-l border-l-dark-low/30 mx-9" />
+            <div className="flex flex-col">
+              <span className="text-lg font-semibold">500+</span>
+              <span className="text-sm">Hours</span>
+            </div>
+            <div className="w-0 h-12 border-l border-l-dark-low/30 mx-9" />
+            <div className="flex flex-col">
+              <span className="text-lg font-semibold flex items-center gap-x-2">
+                <Instagram className="h-7 cursor-pointer" />
+                <Twitter className="h-7 cursor-pointer" />
+                <Mail className="h-7 cursor-pointer" />
+              </span>
+              <span className="text-sm">Connect</span>
+            </div>
           </div>
-          <div className="w-0 h-12 border-l border-l-dark-low/30 mx-9" />
-          <div className="flex flex-col">
-            <span className="text-lg font-semibold">500+</span>
-            <span className="text-sm">Hours</span>
-          </div>
-          <div className="w-0 h-12 border-l border-l-dark-low/30 mx-9" />
-          <div className="flex flex-col">
-            <span className="text-lg font-semibold flex items-center gap-x-2">
-              <Instagram className="h-7 cursor-pointer" />
-              <Twitter className="h-7 cursor-pointer" />
-              <Mail className="h-7 cursor-pointer" />
-            </span>
-            <span className="text-sm">Connect</span>
+          <div className="flex items-center gap-x-1 group">
+            <CircleUserRound size={32} className="cursor-pointer" />
+            <span className="text-lg font-medium group-hover:underline cursor-pointer">Stardusteight</span>
           </div>
         </div>
+
         <div className="flex flex-col">
           <div className="mb-6 flex items-center justify-between">
             <div className="flex items-center gap-x-4">
-              <h3 className="text-lg font-semibold ">My games</h3>
+              <h3 className="text-lg font-semibold ">All games</h3>
               <span className="text-sm text-dark-low cursor-pointer font-normal -mb-[2px] flex items-center">
                 Sort by post date <ChevronDown className="h-[18px]" />
               </span>
@@ -93,11 +100,76 @@ export default function Home() {
               coverUrl="https://upload.wikimedia.org/wikipedia/en/b/bd/Shin_Megami_Tensei_V.png"
               title="Shin Megami Tensei V"
             />
-            <GameCard coverUrl="" title="" />
-            <GameCard coverUrl="" title="" />
-            <GameCard coverUrl="" title="" />
-            <GameCard coverUrl="" title="" />
-            <GameCard coverUrl="" title="" />
+          </div>
+        </div>
+        <div className="flex flex-col mt-12">
+          <div className="mb-6 flex items-center justify-between">
+            <div className="flex items-center gap-x-4">
+              <h3 className="text-lg font-semibold">Current playing</h3>
+              <span className="text-sm text-dark-low cursor-pointer font-normal -mb-[2px] flex items-center">
+                Sort by post date <ChevronDown className="h-[18px]" />
+              </span>
+            </div>
+            <h3 className="text-base font-semibold cursor-pointer underline">
+              View all
+            </h3>
+          </div>
+          <div className="grid grid-cols-5 gap-x-[10px] gap-y-7 flex-wrap">
+            <GameCard
+              coverUrl="https://upload.wikimedia.org/wikipedia/en/c/c6/The_Legend_of_Zelda_Breath_of_the_Wild.jpg"
+              title="The Legend of Zelda: Breath of the Wild"
+            />
+            <GameCard
+              coverUrl="https://cdn.awsli.com.br/2500x2500/1610/1610163/produto/216584583/poster-the-legend-of-zelda-tears-of-the-kingdom-a-5d718770.jpg"
+              title="The Legend of Zelda: Tears of the Kingdom"
+            />
+            <GameCard
+              coverUrl="https://www.gameinformer.com/sites/default/files/styles/product_box_art/public/2022/09/14/51bb7448/persona5royal.jpg"
+              title="Persona 5 Royal"
+            />
+            <GameCard
+              coverUrl="https://cdkeyprices.uk/images/games/5605266/pokemon-sword-desktop-logo-all.jpg"
+              title="Pokémon Sword"
+            />
+            <GameCard
+              coverUrl="https://upload.wikimedia.org/wikipedia/en/b/bd/Shin_Megami_Tensei_V.png"
+              title="Shin Megami Tensei V"
+            />
+          </div>
+        </div>
+        <div className="flex flex-col mt-12">
+          <div className="mb-6 flex items-center justify-between">
+            <div className="flex items-center gap-x-4">
+              <h3 className="text-lg font-semibold">Finished games</h3>
+              <span className="text-sm text-dark-low cursor-pointer font-normal -mb-[2px] flex items-center">
+                Sort by post date <ChevronDown className="h-[18px]" />
+              </span>
+            </div>
+            <h3 className="text-base font-semibold cursor-pointer underline">
+              View all
+            </h3>
+          </div>
+          <div className="grid grid-cols-5 gap-x-[10px] gap-y-7 flex-wrap">
+            <GameCard
+              coverUrl="https://upload.wikimedia.org/wikipedia/en/c/c6/The_Legend_of_Zelda_Breath_of_the_Wild.jpg"
+              title="The Legend of Zelda: Breath of the Wild"
+            />
+            <GameCard
+              coverUrl="https://cdn.awsli.com.br/2500x2500/1610/1610163/produto/216584583/poster-the-legend-of-zelda-tears-of-the-kingdom-a-5d718770.jpg"
+              title="The Legend of Zelda: Tears of the Kingdom"
+            />
+            <GameCard
+              coverUrl="https://www.gameinformer.com/sites/default/files/styles/product_box_art/public/2022/09/14/51bb7448/persona5royal.jpg"
+              title="Persona 5 Royal"
+            />
+            <GameCard
+              coverUrl="https://cdkeyprices.uk/images/games/5605266/pokemon-sword-desktop-logo-all.jpg"
+              title="Pokémon Sword"
+            />
+            <GameCard
+              coverUrl="https://upload.wikimedia.org/wikipedia/en/b/bd/Shin_Megami_Tensei_V.png"
+              title="Shin Megami Tensei V"
+            />
           </div>
         </div>
       </div>
