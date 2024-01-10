@@ -1,17 +1,34 @@
-import { CircleUserRound, Search } from "lucide-react"
+import { ChevronLeft, CircleUserRound, Search } from "lucide-react"
+import Link from "next/link"
 
 interface NavbarProps {
   search?: boolean
+  signIn?: boolean
+  back?: boolean
 }
 
-export const Navbar = ({ search = true }: NavbarProps) => {
+export const Navbar = ({
+  search = true,
+  signIn = true,
+  back = false,
+}: NavbarProps) => {
   return (
-    <div className="w-full bg-dark-str z-[900] fixed top-0">
+    <div className="w-full bg-dark-str z-[900] h-[61px] fixed top-0">
       <div className="max-w-[1022px] mx-auto py-4 flex items-center justify-between">
-        <div className="flex cursor-pointer items-center gap-x-1">
-          <img src="/assets/logo.svg" alt="" className="h-[28px]" />
-          <span className="text-white text-lg">Trackx</span>
-        </div>
+        {back ? (
+          <Link
+            href="/"
+            className="flex items-center gap-x-1 text-light-str cursor-pointer"
+          >
+            <ChevronLeft />
+            Back
+          </Link>
+        ) : (
+          <Link href="/" className="flex cursor-pointer items-center gap-x-1">
+            <img src="/assets/logo.svg" alt="" className="h-[28px]" />
+            <span className="text-white text-lg">Trackx</span>
+          </Link>
+        )}
         {search && (
           <div className="relative h-fit w-fit ml-10">
             <input
@@ -22,12 +39,14 @@ export const Navbar = ({ search = true }: NavbarProps) => {
             <Search className="absolute left-1 top-1/2 -translate-y-1/2 text-light-str/50" />
           </div>
         )}
-        <div className="flex items-center gap-x-1">
-          <button className="flex items-center h-[29px] px-3 gap-x-1 hover:scale-105 transition-all text-light-str bg-gradient-to-t from-[#D5224E] to-[#FF003F] rounded">
-            <CircleUserRound className="w-[20px] cursor-pointer" />
-            Sign In
-          </button>
-        </div>
+        {signIn && (
+          <Link href="/login" className="flex items-center gap-x-1">
+            <button className="flex items-center h-[29px] px-3 gap-x-1 hover:scale-105 transition-all text-light-str bg-gradient-to-t from-[#D5224E] to-[#FF003F] rounded">
+              <CircleUserRound className="w-[20px] cursor-pointer" />
+              Sign In
+            </button>
+          </Link>
+        )}
       </div>
     </div>
   )

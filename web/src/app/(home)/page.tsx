@@ -1,12 +1,13 @@
 import { ChevronRight } from "lucide-react"
 import { Navbar } from "../shared/organisms/Navbar"
+import Link from "next/link"
 
 export default function UserProfile() {
   return (
     <main className="bg-white min-h-screen max-w-screen text-dark-str">
       <Navbar search={false} />
       <div className="max-w-[1022px] mt-36 mb-24 text-center h-full w-full mx-auto flex flex-col items-center justify-center">
-        <div className="flex cursor-pointer items-center gap-x-1 py-1 px-3 rounded-full bg-light-str border border-dark-mid/10">
+        <div className="flex cursor-pointer items-center gap-x-1 py-1 px-3 rounded-full bg-light-str/30 border border-dark-mid/10">
           <img src="/assets/logo.svg" alt="" className="h-[24px]" />
           <span className="text-lg">Trackx</span>
         </div>
@@ -22,10 +23,13 @@ export default function UserProfile() {
           adventure is more intense.
         </span>
         <div className="flex items-center gap-x-1 mt-6">
-          <button className="flex items-center h-[29px] p-5 gap-x-1 hover:scale-105 transition-all text-light-str bg-gradient-to-t from-[#D5224E] to-[#FF003F] rounded">
+          <Link
+            href="/login"
+            className="flex items-center justify-center h-[29px] p-5 gap-x-1 hover:scale-105 transition-all text-light-str bg-gradient-to-t from-[#D5224E] to-[#FF003F] rounded"
+          >
             Try Now for Free
             <ChevronRight />
-          </button>
+          </Link>
         </div>
         <img
           src="/assets/hero.png"
