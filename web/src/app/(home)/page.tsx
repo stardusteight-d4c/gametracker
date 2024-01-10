@@ -1,7 +1,7 @@
 import Link from "next/link"
 import { ChevronRight } from "lucide-react"
 
-import { Navbar } from "../../shared/organisms/Navbar"
+import { Navbar } from "../../shared/components/organisms/Navbar"
 
 export default function UserProfile() {
 

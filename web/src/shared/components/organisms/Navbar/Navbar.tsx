@@ -50,14 +50,20 @@ export const Navbar = ({
         )}
         {session && (
           <div className="flex items-center gap-x-4">
-            <div className="hover:bg-light-str/10 rounded transition-all h-[30px] active:scale-95 px-1 flex text-light-str items-center w-fit gap-x-2 cursor-pointer">
+            <Link
+              href="/games/edit"
+              className="hover:bg-light-str/10 rounded transition-all h-[30px] active:scale-95 px-1 flex text-light-str items-center w-fit gap-x-2 cursor-pointer"
+            >
               <Cog />
               <span className="font-medium cursor-pointer">Games</span>
-            </div>
-            <div className="hover:bg-light-str/10 rounded transition-all h-[30px] active:scale-95 px-1 flex text-light-str items-center w-fit gap-x-2 cursor-pointer">
+            </Link>
+            <Link
+              href="/profile/stardusteight"
+              className="hover:bg-light-str/10 rounded transition-all h-[30px] active:scale-95 px-1 flex text-light-str items-center w-fit gap-x-2 cursor-pointer"
+            >
               <CircleUserRound />
               <span className="font-medium cursor-pointer">Profile</span>
-            </div>
+            </Link>
           </div>
         )}
       </div>

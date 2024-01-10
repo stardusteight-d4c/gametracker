@@ -1,4 +1,4 @@
-import { Navbar } from "@/shared/organisms/Navbar"
+import { Navbar } from "@/shared/components/organisms/Navbar"
 import { GameCard } from "@/modules/components/GameCard/GameCard"
 import {
   ChevronDown,
