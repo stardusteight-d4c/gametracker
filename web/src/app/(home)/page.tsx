@@ -1,7 +1,7 @@
 import Link from "next/link"
 import { ChevronRight } from "lucide-react"
 
-import { Navbar } from "../shared/organisms/Navbar"
+import { Navbar } from "../../shared/organisms/Navbar"
 
 export default function UserProfile() {
 
@@ -35,7 +35,7 @@ export default function UserProfile() {
         </div>
         <img
           src="/assets/hero.png"
-          className="mt-[55px] shadow-md shadow-dark-str/10 object-fill mx-auto w-[808px] h-[465px] rounded-lg border border-dark-mid/10"
+          className="mt-[55px] object-fill mx-auto w-[808px] h-[465px] rounded-lg border border-dark-mid/10"
         />
       </div>
       <div className="w-full h-[4px] bg-dark-str" />

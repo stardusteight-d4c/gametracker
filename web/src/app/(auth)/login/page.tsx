@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { Navbar } from "@/app/shared/organisms/Navbar"
+import { Navbar } from "@/shared/organisms/Navbar"
 import { SignIn } from "@/modules/auth/pages/login/components/SignIn"
 import { SignUp } from "@/modules/auth/pages/login/components/SignUp"
 
