@@ -1,4 +1,4 @@
-import { Navbar } from "@/app/shared/organisms/Navbar"
+import { Navbar } from "@/shared/organisms/Navbar"
 import { GameCard } from "@/modules/components/GameCard/GameCard"
 import {
   ChevronDown,
@@ -19,7 +19,7 @@ export default function UserProfile() {
             creating captivating worlds.
           </span>
         </h1>
-        <div className="flex mb-8 items-center justify-between">
+        <div className="flex items-center justify-between mb-8">
           <div className="flex">
             <div className="flex flex-col">
               <span className="text-lg font-semibold">15+</span>
@@ -40,9 +40,9 @@ export default function UserProfile() {
               <span className="text-sm">Connect</span>
             </div>
           </div>
-          <div className="flex items-center gap-x-1 group cursor-pointer">
+          <div className="flex items-center gap-x-2 group cursor-pointer">
             <CircleUserRound size={32} />
-            <span className="text-lg font-medium group-hover:underline cursor-pointer">
+            <span className="text-lg font-medium cursor-pointer">
               Stardusteight
             </span>
           </div>
