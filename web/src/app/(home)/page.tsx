@@ -25,7 +25,7 @@ export default function UserProfile() {
         <div className="flex items-center gap-x-1 mt-6">
           <Link
             href="/login"
-            className="flex items-center justify-center h-[29px] p-5 gap-x-1 hover:scale-105 transition-all text-light-str bg-gradient-to-t from-[#D5224E] to-[#FF003F] rounded"
+            className="flex font-semibold items-center justify-center h-[29px] p-5 gap-x-1 active:scale-95 transition-all text-light-str bg-gradient-to-t from-[#D5224E] to-[#FF003F] rounded"
           >
             Try Now for Free
             <ChevronRight />
