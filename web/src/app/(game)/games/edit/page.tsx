@@ -60,10 +60,10 @@ export default function Game() {
                 className="w-[300px] p-2 rounded outline-none border border-dark-mid/10 focus:border-[#FF003F]"
               />
             </div>
-            <div>
+            <div className="w-full flex items-center justify-between">
               <span
                 onClick={() => setOpenDropdown(!openDropdown)}
-                className="text-sm relative text-dark-low cursor-pointer font-normal -mb-[2px] flex items-center"
+                className="text-sm w-fit relative text-dark-low cursor-pointer font-normal -mb-[2px] flex items-center"
               >
                 {gameState}{" "}
                 <ChevronDown
@@ -74,7 +74,7 @@ export default function Game() {
                 {openDropdown && (
                   <div
                     onClick={handleSelectGameState}
-                    className="absolute top-full mt-1 shadow-md shadow-black/10 rounded px-3 py-2 bg-dark-str text-light-str border border-dark-mid/10"
+                    className="absolute whitespace-nowrap top-full mt-1 shadow-md shadow-black/10 rounded px-3 py-2 bg-dark-str text-light-str border border-dark-mid/10"
                   >
                     {gameState === "Current playing"
                       ? "Finished game"
@@ -99,7 +99,11 @@ export default function Game() {
                 onChange={handleNoteChange}
                 className="w-[300px] p-2 resize-none h-[100px] rounded outline-none border border-dark-mid/10 focus:border-[#FF003F]"
               />
-              <span className={`text-sm cursor-pointer mt-[2px] ${note.length === 255 ? 'text-[#FF003F]' : 'text-dark-low '}`}>
+              <span
+                className={`text-sm cursor-pointer mt-[2px] ${
+                  note.length === 255 ? "text-[#FF003F]" : "text-dark-low "
+                }`}
+              >
                 {note.length}/255
               </span>
             </div>
