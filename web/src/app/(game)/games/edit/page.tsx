@@ -4,9 +4,25 @@ import { useState } from "react"
 
 import { Navbar } from "@/shared/components/organisms/Navbar"
 import { scoreRank } from "@/shared/utils/scoreRank"
+import { ChevronDown } from "lucide-react"
 
 export default function Game() {
   const [score, setScore] = useState<number>(1)
+  const [openDropdown, setOpenDropdown] = useState<boolean>(false)
+  const [note, setNote] = useState("")
+  const [gameState, setGameState] = useState<
+    "Current playing" | "Finished game"
+  >("Current playing")
+
+  function handleSelectGameState() {
+    if (gameState === "Current playing") setGameState("Finished game")
+    if (gameState === "Finished game") setGameState("Current playing")
+  }
+
+  const handleNoteChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const updatedNote = event.target.value
+    setNote(updatedNote)
+  }
 
   return (
     <main className="w-screen min-h-screen">
@@ -44,6 +60,29 @@ export default function Game() {
                 className="w-[300px] p-2 rounded outline-none border border-dark-mid/10 focus:border-[#FF003F]"
               />
             </div>
+            <div>
+              <span
+                onClick={() => setOpenDropdown(!openDropdown)}
+                className="text-sm relative text-dark-low cursor-pointer font-normal -mb-[2px] flex items-center"
+              >
+                {gameState}{" "}
+                <ChevronDown
+                  className={`h-[18px] transition-all ${
+                    openDropdown ? "rotate-180" : "rotate-0"
+                  }`}
+                />
+                {openDropdown && (
+                  <div
+                    onClick={handleSelectGameState}
+                    className="absolute top-full mt-1 shadow-md shadow-black/10 rounded px-3 py-2 bg-dark-str text-light-str border border-dark-mid/10"
+                  >
+                    {gameState === "Current playing"
+                      ? "Finished game"
+                      : "Current playing"}
+                  </div>
+                )}
+              </span>
+            </div>
             <div className="flex flex-col">
               <label
                 htmlFor="note"
@@ -55,10 +94,13 @@ export default function Game() {
                 id="note"
                 placeholder="Enter a note"
                 autoComplete="off"
+                maxLength={255}
+                value={note}
+                onChange={handleNoteChange}
                 className="w-[300px] p-2 resize-none h-[100px] rounded outline-none border border-dark-mid/10 focus:border-[#FF003F]"
               />
-              <span className="text-sm text-dark-low cursor-pointer mt-[2px]">
-                0/255
+              <span className={`text-sm cursor-pointer mt-[2px] ${note.length === 255 ? 'text-[#FF003F]' : 'text-dark-low '}`}>
+                {note.length}/255
               </span>
             </div>
             <div className="flex flex-col">
@@ -91,7 +133,7 @@ export default function Game() {
                 ))}
               </div>
             </div>
-            <button className="flex font-semibold items-center justify-center h-[29px] p-5 gap-x-1 active:scale-95 transition-all text-light-str bg-gradient-to-t from-[#D5224E] to-[#FF003F] rounded">
+            <button className="flex mt-2 font-semibold items-center justify-center h-[29px] p-5 gap-x-1 active:scale-95 transition-all text-light-str bg-gradient-to-t from-[#D5224E] to-[#FF003F] rounded">
               Publish
             </button>
           </div>
