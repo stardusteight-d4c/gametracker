@@ -4,7 +4,7 @@ import { useState } from "react"
 
 import { Navbar } from "@/shared/components/organisms/Navbar"
 import { scoreRank } from "@/shared/utils/scoreRank"
-import { ChevronDown } from "lucide-react"
+import { ChevronDown, Pencil, Send, Trash } from "lucide-react"
 
 export default function Game() {
   const [score, setScore] = useState<number>(1)
@@ -13,6 +13,7 @@ export default function Game() {
   const [gameState, setGameState] = useState<
     "Current playing" | "Finished game"
   >("Current playing")
+  const [activeMode, setActiveMode] = useState<"new" | "edit" | "delete">("new")
 
   function handleSelectGameState() {
     if (gameState === "Current playing") setGameState("Finished game")
@@ -28,7 +29,48 @@ export default function Game() {
     <main className="w-screen min-h-screen">
       <div className="flex flex-col h-screen items-center justify-center">
         <Navbar />
-        <div className="flex flex-col border border-dark-mid/10 mt-[61px] rounded p-7">
+        <div className="flex flex-col relative border border-dark-mid/10 mt-[61px] rounded p-7">
+          <div className="flex items-center gap-x-2 absolute right-7 top-2">
+            <div className="relative group">
+              <Send
+                size={24}
+                onClick={() => setActiveMode("new")}
+                className={`cursor-pointer text-dark-low p-1 rounded-sm ${
+                  activeMode === "new" && "bg-light-str/90"
+                }`}
+              />
+              <div className="absolute border border-dark-low/30 z-50 whitespace-nowrap hidden group-hover:block -bottom-9 left-1/2 -translate-x-1/2 bg-dark-str text-light-str rounded-sm py-[1px] px-[4px]">
+                New
+              </div>
+              <div className="rotate-45 w-[10px] h-[10px] hidden group-hover:block z-0 absolute -bottom-[13px] border border-dark-low/30 left-1/2 -translate-x-1/2 bg-dark-str" />
+            </div>
+            <div className="relative group">
+              <Pencil
+                size={24}
+                onClick={() => setActiveMode("edit")}
+                className={`cursor-pointer text-dark-low p-1 rounded-sm ${
+                  activeMode === "edit" && "bg-light-str/90"
+                }`}
+              />
+              <div className="absolute border border-dark-low/30 z-50 whitespace-nowrap hidden group-hover:block -bottom-9 left-1/2 -translate-x-1/2 bg-dark-str text-light-str rounded-sm py-[1px] px-[4px]">
+                Edit
+              </div>
+              <div className="rotate-45 w-[10px] h-[10px] hidden group-hover:block z-0 absolute -bottom-[13px] border border-dark-low/30 left-1/2 -translate-x-1/2 bg-dark-str" />
+            </div>
+            <div className="relative group">
+              <Trash
+                size={24}
+                onClick={() => setActiveMode("delete")}
+                className={`cursor-pointer text-dark-low p-1 rounded-sm ${
+                  activeMode === "delete" && "bg-light-str/90"
+                }`}
+              />
+              <div className="absolute border border-dark-low/30 z-50 whitespace-nowrap hidden group-hover:block -bottom-9 left-1/2 -translate-x-1/2 bg-dark-str text-light-str rounded-sm py-[1px] px-[4px]">
+                Delete
+              </div>
+              <div className="rotate-45 w-[10px] h-[10px] hidden group-hover:block z-0 absolute -bottom-[13px] border border-dark-low/30 left-1/2 -translate-x-1/2 bg-dark-str" />
+            </div>
+          </div>
           <div className="flex flex-col gap-y-4">
             <div className="flex flex-col">
               <label
