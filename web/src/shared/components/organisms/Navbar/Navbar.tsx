@@ -51,7 +51,7 @@ export const Navbar = ({
         {session && (
           <div className="flex items-center gap-x-4">
             <Link
-              href="/games/edit"
+              href="/games/manage"
               className="hover:bg-light-str/10 rounded transition-all h-[30px] active:scale-95 px-1 flex text-light-str items-center w-fit gap-x-2 cursor-pointer"
             >
               <Cog />
