@@ -20,7 +20,7 @@ export function Delete() {
 
   return (
     <div>
-      <div className="relative h-fit w-fit mt-4">
+      <div className="relative h-fit w-fit mt-8">
         <input
           type="text"
           onChange={handleChange}

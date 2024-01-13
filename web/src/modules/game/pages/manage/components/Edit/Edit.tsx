@@ -20,7 +20,7 @@ export function Edit() {
 
   return (
     <div>
-      <div className="relative h-fit w-fit mt-4">
+      <div className="relative h-fit md:w-fit mt-8 w-full">
         <input
           type="text"
           onChange={handleChange}

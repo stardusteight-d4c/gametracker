@@ -23,7 +23,7 @@ export function New() {
   }
 
   return (
-    <div className="flex flex-col gap-y-4">
+    <div className="flex flex-col gap-y-4 mt-4 md:w-fit w-full">
       <div className="flex flex-col">
         <label
           htmlFor="coverUrl"
@@ -36,7 +36,7 @@ export function New() {
           id="coverUrl"
           placeholder="Enter a cover url"
           autoComplete="off"
-          className="w-[300px] p-2 rounded outline-none border border-dark-mid/10 focus:border-[#FF003F]"
+          className="lg:w-[300px] p-2 rounded outline-none border border-dark-mid/10 focus:border-[#FF003F]"
         />
       </div>
       <div className="flex flex-col">
@@ -51,7 +51,7 @@ export function New() {
           id="gameTitle"
           placeholder="Enter a game title"
           autoComplete="off"
-          className="w-[300px] p-2 rounded outline-none border border-dark-mid/10 focus:border-[#FF003F]"
+          className="lg:w-[300px] p-2 rounded outline-none border border-dark-mid/10 focus:border-[#FF003F]"
         />
       </div>
       <div className="w-full flex items-center justify-between">
@@ -88,7 +88,7 @@ export function New() {
           maxLength={255}
           value={note}
           onChange={handleNoteChange}
-          className="w-[300px] p-2 resize-none h-[100px] rounded outline-none border border-dark-mid/10 focus:border-[#FF003F]"
+          className="lg:w-[300px] p-2 resize-none h-[100px] rounded outline-none border border-dark-mid/10 focus:border-[#FF003F]"
         />
         <span
           className={`text-sm cursor-pointer mt-[2px] ${
