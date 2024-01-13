@@ -31,7 +31,7 @@ export const Navbar = ({
           </Link>
         )}
         {search && (
-          <div className="relative h-fit w-fit ml-10">
+          <div className="hidden md:block relative h-fit w-fit ml-10">
             <input
               type="text"
               placeholder="Search for a user"
@@ -40,6 +40,7 @@ export const Navbar = ({
             <Search className="absolute left-1 top-1/2 -translate-y-1/2 text-light-str/50" />
           </div>
         )}
+
         {signIn && !session && (
           <Link href="/login" className="flex items-center gap-x-1">
             <button className="flex font-medium items-center h-[30px] px-3 gap-x-1 active:scale-95 transition-all text-light-str bg-gradient-to-t from-[#D5224E] to-[#FF003F] rounded">
@@ -50,19 +51,26 @@ export const Navbar = ({
         )}
         {session && (
           <div className="flex items-center gap-x-2 md:gap-x-4">
+            <div className="flex md:hidden hover:bg-light-str/10 rounded transition-all h-[30px] active:scale-95 px-1 text-light-str items-center w-fit gap-x-2 cursor-pointer">
+              <Search />
+            </div>
             <Link
               href="/games/manage"
               className="hover:bg-light-str/10 rounded transition-all h-[30px] active:scale-95 px-1 flex text-light-str items-center w-fit gap-x-2 cursor-pointer"
             >
               <Cog />
-              <span className="font-medium cursor-pointer hidden md:block">Games</span>
+              <span className="font-medium cursor-pointer hidden md:block">
+                Games
+              </span>
             </Link>
             <Link
               href="/profile/stardusteight"
               className="hover:bg-light-str/10 rounded transition-all h-[30px] active:scale-95 px-1 flex text-light-str items-center w-fit gap-x-2 cursor-pointer"
             >
               <CircleUserRound />
-              <span className="font-medium cursor-pointer hidden md:block">Profile</span>
+              <span className="font-medium cursor-pointer hidden md:block">
+                Profile
+              </span>
             </Link>
           </div>
         )}

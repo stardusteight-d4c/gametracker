@@ -8,13 +8,13 @@ interface GameCardProps {
 
 export function GameCard({ title, coverUrl }: GameCardProps) {
   return (
-    <div className="w-[196px] col-span-1 rounded flex flex-col cursor-pointer">
-      <div className="w-[196px] h-[265px] relative rounded border border-dark-str/10 overflow-hidden">
+    <div className="lg:w-[196px] col-span-1 rounded flex flex-col cursor-pointer">
+      <div className="lg:w-[196px] h-[245px] lg:h-[265px] relative rounded border border-dark-str/10 overflow-hidden">
         {coverUrl ? (
           <img
             src={coverUrl}
             alt=""
-            className="w-[196px] h-[265px] object-fill hover:scale-105 transition-all"
+            className="lg:w-[196px] w-full h-[245px] lg:h-[265px] object-fill hover:scale-105 transition-all"
           />
         ) : (
           <div className="w-[196px] h-[265px] flex flex-col items-center justify-center bg-dark-low/10">

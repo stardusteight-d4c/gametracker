@@ -12,14 +12,14 @@ export default function UserProfile() {
   return (
     <main className="bg-white min-h-[100vh] max-w-screen text-dark-str">
       <Navbar />
-      <div className="flex flex-col max-w-[1022px] mt-[50px] mb-[100px] w-full mx-auto pt-11">
+      <div className="px-3 lg:px-0 flex flex-col max-w-[1022px] mt-[50px] mb-[100px] w-full mx-auto pt-11">
         <h1 className="text-3xl font-semibold mb-11">
           Where reality and imagination merge, <br />
           <span className="leading-10 block text-transparent bg-clip-text bg-gradient-to-t from-[#D5224E] to-[#FF003F]">
             creating captivating worlds.
           </span>
         </h1>
-        <div className="flex items-center justify-between mb-8">
+        <div className="flex items-center flex-col-reverse lg:flex-row gap-y-8 justify-between mb-8">
           <div className="flex">
             <div className="flex flex-col">
               <span className="text-lg font-semibold">15+</span>
@@ -49,7 +49,7 @@ export default function UserProfile() {
         </div>
 
         <div className="flex flex-col">
-          <div className="mb-6 flex items-center justify-between">
+          <div className="mb-6 flex lg:items-center flex-col lg:flex-row justify-between">
             <div className="flex items-center gap-x-4">
               <h3 className="text-lg font-semibold ">All games</h3>
               <span className="text-sm text-dark-low cursor-pointer font-normal -mb-[2px] flex items-center">
@@ -60,7 +60,7 @@ export default function UserProfile() {
               View all
             </h3>
           </div>
-          <div className="grid grid-cols-5 gap-x-[10px] gap-y-7 flex-wrap">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-x-[10px] gap-y-7 flex-wrap">
             <GameCard
               coverUrl="https://upload.wikimedia.org/wikipedia/en/c/c6/The_Legend_of_Zelda_Breath_of_the_Wild.jpg"
               title="The Legend of Zelda: Breath of the Wild"
@@ -84,7 +84,7 @@ export default function UserProfile() {
           </div>
         </div>
         <div className="flex flex-col mt-12">
-          <div className="mb-6 flex items-center justify-between">
+          <div className="mb-6 flex lg:items-center flex-col lg:flex-row justify-between">
             <div className="flex items-center gap-x-4">
               <h3 className="text-lg font-semibold">Current playing</h3>
               <span className="text-sm text-dark-low cursor-pointer font-normal -mb-[2px] flex items-center">
@@ -95,7 +95,7 @@ export default function UserProfile() {
               View all
             </h3>
           </div>
-          <div className="grid grid-cols-5 gap-x-[10px] gap-y-7 flex-wrap">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-x-[10px] gap-y-7 flex-wrap">
             <GameCard
               coverUrl="https://upload.wikimedia.org/wikipedia/en/c/c6/The_Legend_of_Zelda_Breath_of_the_Wild.jpg"
               title="The Legend of Zelda: Breath of the Wild"
@@ -119,7 +119,7 @@ export default function UserProfile() {
           </div>
         </div>
         <div className="flex flex-col mt-12">
-          <div className="mb-6 flex items-center justify-between">
+          <div className="mb-6 flex lg:items-center flex-col lg:flex-row justify-between">
             <div className="flex items-center gap-x-4">
               <h3 className="text-lg font-semibold">Finished games</h3>
               <span className="text-sm text-dark-low cursor-pointer font-normal -mb-[2px] flex items-center">
@@ -130,7 +130,7 @@ export default function UserProfile() {
               View all
             </h3>
           </div>
-          <div className="grid grid-cols-5 gap-x-[10px] gap-y-7 flex-wrap">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-x-[10px] gap-y-7 flex-wrap">
             <GameCard
               coverUrl="https://upload.wikimedia.org/wikipedia/en/c/c6/The_Legend_of_Zelda_Breath_of_the_Wild.jpg"
               title="The Legend of Zelda: Breath of the Wild"
