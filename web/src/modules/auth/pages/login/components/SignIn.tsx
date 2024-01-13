@@ -4,7 +4,7 @@ interface SignInProps {
 
 export const SignIn = ({ onTypeChange }: SignInProps) => {
   return (
-    <div className="flex flex-col border border-dark-mid/10 mt-[61px] rounded p-7">
+    <div className="flex flex-col border border-dark-mid/10 mt-[61px] rounded p-4 md:p-7">
       <div className="flex cursor-pointer items-center gap-x-1 mb-6 w-fit">
         <img src="/assets/logo.svg" alt="" className="h-[24px]" />
         <span className="text-lg">Trackx</span>

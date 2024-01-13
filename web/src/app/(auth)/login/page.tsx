@@ -20,7 +20,7 @@ export default function Login() {
     <main className="w-screen min-h-screen">
       <div className="flex flex-col h-screen items-center justify-center">
         <Navbar search={false} signIn={false} back={true} />
-        {renderLogin()}
+        <div className="w-full px-3 lg:px-0">{renderLogin()}</div>
       </div>
     </main>
   )
