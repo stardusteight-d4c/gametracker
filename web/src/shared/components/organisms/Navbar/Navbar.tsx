@@ -14,8 +14,8 @@ export const Navbar = ({
 }: NavbarProps) => {
   const session = true
   return (
-    <div className="w-full bg-dark-str z-[900] h-[61px] fixed top-0">
-      <div className="max-w-[1022px] mx-auto py-4 flex items-center justify-between">
+    <div className="px-3 md:px-0 w-screen bg-dark-str z-[900] h-[61px] fixed top-0">
+      <div className="max-w-[1022px] w-full mx-auto py-4 flex items-center justify-between">
         {back ? (
           <Link
             href="/"
@@ -49,20 +49,20 @@ export const Navbar = ({
           </Link>
         )}
         {session && (
-          <div className="flex items-center gap-x-4">
+          <div className="flex items-center gap-x-2 md:gap-x-4">
             <Link
               href="/games/manage"
               className="hover:bg-light-str/10 rounded transition-all h-[30px] active:scale-95 px-1 flex text-light-str items-center w-fit gap-x-2 cursor-pointer"
             >
               <Cog />
-              <span className="font-medium cursor-pointer">Games</span>
+              <span className="font-medium cursor-pointer hidden md:block">Games</span>
             </Link>
             <Link
               href="/profile/stardusteight"
               className="hover:bg-light-str/10 rounded transition-all h-[30px] active:scale-95 px-1 flex text-light-str items-center w-fit gap-x-2 cursor-pointer"
             >
               <CircleUserRound />
-              <span className="font-medium cursor-pointer">Profile</span>
+              <span className="font-medium cursor-pointer hidden md:block">Profile</span>
             </Link>
           </div>
         )}
