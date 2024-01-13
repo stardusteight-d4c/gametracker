@@ -14,7 +14,7 @@ export const Navbar = ({
 }: NavbarProps) => {
   const session = true
   return (
-    <div className="px-3 md:px-0 w-screen bg-dark-str z-[900] h-[61px] fixed top-0">
+    <div className="px-3 lg:px-0 w-screen bg-dark-str z-[900] h-[61px] fixed top-0">
       <div className="max-w-[1022px] w-full mx-auto py-4 flex items-center justify-between">
         {back ? (
           <Link
