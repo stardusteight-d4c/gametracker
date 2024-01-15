@@ -1,0 +1,34 @@
+version: '3'
+services:
+  nestjs:
+    container_name: server
+    build: .
+    ports:
+      - 3334:3333
+      - 5555:5555
+    volumes:
+      - .:/home/node/app
+    networks:
+      - trackx
+
+  postgres:
+    container_name: database
+    image: postgres:latest
+    restart: always
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=root
+      - POSTGRES_DB=trackx
+    logging:
+      options:
+        max-size: 10m
+    ports:
+      - 5438:5432
+    volumes:
+      - ./db/postgres-trackx-data:/var/lib/postgresql/data
+    networks:
+      - trackx
+
+networks:
+  trackx:
+    external: true
