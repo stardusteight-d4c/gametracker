@@ -1,6 +1,7 @@
-import { setCookieHttpOnly } from "@shared/utils"
 import { FastifyReply } from "fastify"
-import { UserRepository } from "../decorators/UserRepository"
+
+import { UserRepository } from "@modules/users/app/decorators/UserRepository"
+import { setCookieHttpOnly } from "@shared/utils"
 
 @UserRepository
 export class SignUp {
