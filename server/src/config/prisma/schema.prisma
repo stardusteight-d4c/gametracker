@@ -7,3 +7,36 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+enum GameStatus {
+  playing
+  finished
+}
+
+model User {
+  id String @id @default(uuid())
+
+  username String @unique
+  email    String @unique
+  password String
+
+  games Game[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("users")
+}
+
+model Game {
+  id String @id @default(uuid())
+
+  userId   String
+  coverUrl String
+  title    String
+  note     String
+  score    Int
+  status   GameStatus
+
+  user User @relation(fields: [userId], references: [id])
+}
