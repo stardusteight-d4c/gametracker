@@ -1,18 +1,19 @@
 import { setCookieHttpOnly } from "@shared/utils"
 import { FastifyReply } from "fastify"
+import { UserRepository } from "../decorators/UserRepository"
 
-// Inserir repository via decorator
+@UserRepository
 export class SignUp {
   repository: IUserRepository
   sessionTokenAdapter: ISessionTokenAdapter
   cryptoAdapter: ICryptoAdapter
-  user: IUser
+  user: SignUpDTO
   response: FastifyReply
 
   constructor(attr: {
     sessionTokenAdapter: ISessionTokenAdapter
     cryptoAdapter: ICryptoAdapter
-    user: IUser
+    user: SignUpDTO
     response: FastifyReply
   }) {
     this.sessionTokenAdapter = attr.sessionTokenAdapter
@@ -22,6 +23,8 @@ export class SignUp {
   }
 
   public async execute() {
+    console.log("aaaa", this.user)
+
     return this.repository
       .save({
         ...this.user,
