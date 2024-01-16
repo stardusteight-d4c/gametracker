@@ -23,7 +23,25 @@ export class SignUp {
   }
 
   public async execute() {
-    console.log("aaaa", this.user)
+    const usernameAlreadyExists = await this.repository.findByUsername(
+      this.user.username
+    )
+    if (usernameAlreadyExists)
+      return this.response.status(400).send({
+        message: "Username already exists",
+        error: "Bad Request",
+        statusCode: 400,
+        data: null,
+      })
+
+    const emailAlreadyExists = await this.repository.findByEmail(this.user.email)
+    if (emailAlreadyExists)
+      return this.response.status(400).send({
+        message: "Email already exists",
+        error: "Bad Request",
+        statusCode: 400,
+        data: null,
+      })
 
     return this.repository
       .save({
@@ -53,7 +71,7 @@ export class SignUp {
     const refreshToken = this.getRefreshToken()
     setCookieHttpOnly(this.response, refreshToken)
 
-    return this.response.status(200).send({
+    return this.response.status(201).send({
       message: "Registered successfully",
       error: null,
       statusCode: 201,

@@ -12,14 +12,35 @@ export class UserPrismaRepository implements IUserRepository {
   }
 
   public async save(user: IUser): Promise<IUser> {
-    return user as any
+    await db.user.create({
+      data: user,
+    })
+    return user
   }
 
   public async findByEmail(email: string): Promise<IUser> {
-    throw new Error("Method not implemented.")
+    return await db.user
+      .findFirst({
+        where: {
+          email,
+        },
+      })
+      .then((user) => {
+        if (user) return user as IUser
+        if (!user) return null
+      })
   }
 
   public async findByUsername(username: string): Promise<IUser> {
-    throw new Error("Method not implemented.")
+    return await db.user
+      .findFirst({
+        where: {
+          username,
+        },
+      })
+      .then((user) => {
+        if (user) return user as IUser
+        if (!user) return null
+      })
   }
 }
