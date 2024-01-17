@@ -37,8 +37,6 @@ export class SignIn {
   }
 
   public async execute() {
-    console.log('this.credencials', this.credencials);
-    
     if (this.credencials.type === "email") {
       const user = await this.repository.findByEmail(this.credencials.access)
       if (!user) {

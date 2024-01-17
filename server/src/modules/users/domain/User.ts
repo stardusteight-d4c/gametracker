@@ -18,7 +18,7 @@ export class User {
 
   public set(_values: IUser) {
     throw new Error(
-      "Cannot modify User directly. Use the UserService methods instead"
+      "Cannot modify User directly"
     )
   }
 }
