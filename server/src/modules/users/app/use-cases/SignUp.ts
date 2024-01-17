@@ -11,7 +11,7 @@ export class SignUp {
   user: SignUpDTO
   response: FastifyReply
 
-  constructor(attr: {
+  public constructor(attr: {
     sessionTokenAdapter: ISessionTokenAdapter
     cryptoAdapter: ICryptoAdapter
     user: SignUpDTO
@@ -35,7 +35,9 @@ export class SignUp {
         data: null,
       })
 
-    const emailAlreadyExists = await this.repository.findByEmail(this.user.email)
+    const emailAlreadyExists = await this.repository.findByEmail(
+      this.user.email
+    )
     if (emailAlreadyExists)
       return this.response.status(400).send({
         message: "Email already exists",
@@ -70,7 +72,21 @@ export class SignUp {
   private generateResponse() {
     const accessToken = this.getAccessToken()
     const refreshToken = this.getRefreshToken()
-    setCookieHttpOnly(this.response, refreshToken)
+    const thirtyDays = 30 * 24 * 60 * 60 * 1000
+    const thirtyMinutes = 30 * 60 * 1000
+
+    setCookieHttpOnly({
+      name: "accessToken",
+      value: accessToken,
+      age: thirtyMinutes,
+      response: this.response,
+    })
+    setCookieHttpOnly({
+      name: "refreshToken",
+      value: refreshToken,
+      age: thirtyDays,
+      response: this.response,
+    })
 
     return this.response.status(201).send({
       message: "Registered successfully",

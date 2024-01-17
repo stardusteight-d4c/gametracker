@@ -16,7 +16,7 @@ export class SignIn {
     password: string
   }
 
-  constructor(attr: {
+  public constructor(attr: {
     sessionTokenAdapter: ISessionTokenAdapter
     cryptoAdapter: ICryptoAdapter
     response: FastifyReply
@@ -95,7 +95,22 @@ export class SignIn {
   private generateResponse() {
     const accessToken = this.getAccessToken()
     const refreshToken = this.getRefreshToken()
-    setCookieHttpOnly(this.response, refreshToken)
+    const thirtyDays = 30 * 24 * 60 * 60 * 1000
+    const thirtyMinutes = 30 * 60 * 1000
+
+    setCookieHttpOnly({
+      name: "accessToken",
+      value: accessToken,
+      age: thirtyMinutes,
+      response: this.response,
+    })
+    setCookieHttpOnly({
+      name: "refreshToken",
+      value: refreshToken,
+      age: thirtyDays,
+      response: this.response,
+    })
+
     return {
       message: "Authenticated successfully",
       error: null,
