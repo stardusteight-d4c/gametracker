@@ -1,4 +1,5 @@
 import { db } from "@connect/prisma"
+import { Prisma } from "@prisma/client"
 
 export class UserPrismaRepository implements IUserRepository {
   private static instance: UserPrismaRepository
@@ -11,6 +12,19 @@ export class UserPrismaRepository implements IUserRepository {
     return UserPrismaRepository.instance
   }
 
+  private async getTotalItemsThatMatchWithListQuery(params: UserListDTO) {
+    const where: Prisma.UserWhereInput = {
+      username: params.username
+        ? { contains: params.username, mode: "insensitive" }
+        : undefined,
+    }
+    const query = {
+      where,
+    }
+
+    return await db.user.count(query)
+  }
+
   public async save(user: IUser): Promise<IUser> {
     await db.user.create({
       data: user,
@@ -19,7 +33,7 @@ export class UserPrismaRepository implements IUserRepository {
   }
 
   public async findByEmail(email: string): Promise<IUser> {
-    return await db.user
+    return db.user
       .findFirst({
         where: {
           email,
@@ -32,7 +46,7 @@ export class UserPrismaRepository implements IUserRepository {
   }
 
   public async findByUsername(username: string): Promise<IUser> {
-    return await db.user
+    return db.user
       .findFirst({
         where: {
           username,
@@ -42,5 +56,34 @@ export class UserPrismaRepository implements IUserRepository {
         if (user) return user as IUser
         if (!user) return null
       })
+  }
+
+  public async list(params: UserListDTO): Promise<PaginatedList<IUser[]>> {
+    const pagination =
+      params.currentPage !== undefined && params.pageSize !== undefined
+    const where: Prisma.UserWhereInput = {
+      username: params.username
+        ? { contains: params.username, mode: "insensitive" }
+        : undefined,
+    }
+    const skip = pagination
+      ? (params.currentPage - 1) * params.pageSize
+      : undefined
+    const take = params.pageSize ? params.pageSize : undefined
+    const query = {
+      where,
+      skip,
+      take,
+    }
+
+    return db.user.findMany(query).then((result) =>
+      this.getTotalItemsThatMatchWithListQuery(params).then((totalItems) => ({
+        currentPage: params.currentPage,
+        itemsOnPage: result.length,
+        totalPages: Math.ceil(totalItems / params.pageSize),
+        totalItems,
+        items: result,
+      }))
+    )
   }
 }
