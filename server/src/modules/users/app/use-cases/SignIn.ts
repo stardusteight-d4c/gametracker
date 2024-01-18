@@ -29,11 +29,7 @@ export class SignIn {
     this.sessionTokenAdapter = attr.sessionTokenAdapter
     this.cryptoAdapter = attr.cryptoAdapter
     this.response = attr.response
-    this.credencials = {
-      type: attr.credencials.type,
-      access: attr.credencials.access,
-      password: attr.credencials.password,
-    }
+    this.credencials = attr.credencials
   }
 
   public async execute() {
