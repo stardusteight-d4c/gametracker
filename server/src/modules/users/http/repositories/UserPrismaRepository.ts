@@ -61,15 +61,17 @@ export class UserPrismaRepository implements IUserRepository {
   public async list(params: UserListDTO): Promise<PaginatedList<IUser[]>> {
     const pagination =
       params.currentPage !== undefined && params.pageSize !== undefined
+    const skip = pagination
+      ? (params.currentPage - 1) * params.pageSize
+      : undefined
+    const take = params.pageSize ? params.pageSize : undefined
+
     const where: Prisma.UserWhereInput = {
       username: params.username
         ? { contains: params.username, mode: "insensitive" }
         : undefined,
     }
-    const skip = pagination
-      ? (params.currentPage - 1) * params.pageSize
-      : undefined
-    const take = params.pageSize ? params.pageSize : undefined
+
     const query = {
       where,
       skip,
