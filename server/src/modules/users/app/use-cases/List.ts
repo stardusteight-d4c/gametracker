@@ -8,16 +8,18 @@ export class List {
   params: UserListDTO
   response: FastifyReply
 
-  public constructor(attr: { params: UserListDTO; reponse: FastifyReply }) {
+  public constructor(attr: { params: UserListDTO; response: FastifyReply }) {
     this.params = attr.params
-    this.response = attr.reponse
+    this.response = attr.response
   }
 
   public async execute() {
     const items = await this.repository.list({
       ...this.params,
-      currentPage: Number(this.params.currentPage),
-      pageSize: Number(this.params.pageSize),
+      currentPage: this.params.currentPage
+        ? Number(this.params.currentPage)
+        : undefined,
+      pageSize: this.params.pageSize ? Number(this.params.pageSize) : undefined,
     })
 
     return this.response.status(200).send({
