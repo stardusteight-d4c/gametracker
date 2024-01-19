@@ -1,11 +1,26 @@
 import { FastifyReply, FastifyRequest } from "fastify"
-import { Body, Controller, Post, Req, Res } from "@nestjs/common"
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Put,
+  Query,
+  Req,
+  Res,
+} from "@nestjs/common"
 
-import { Publish } from "@modules/games/app/use-cases"
+import {
+  Publish,
+  Delete as DeleteGame,
+  Edit,
+  List,
+} from "@modules/games/app/use-cases"
 import { getUserSession } from "@shared/utils/getUserSession"
 
 @Controller("games")
-// @UseGuards(RequireUserPermission)
 export class GameController {
   @Post("publish")
   public async publish(
@@ -13,9 +28,55 @@ export class GameController {
     @Req() req: FastifyRequest,
     @Res() reply: FastifyReply
   ) {
-    console.log(getUserSession(req));
-    
     return new Publish({
+      game: body,
+      userId: getUserSession(req)?.id,
+      response: reply,
+    })
+      .execute()
+      .then((res) => reply.status(201).send(res))
+      .catch((err) => reply.status(501).send(err))
+  }
+
+  @Get("list")
+  public async list(
+    @Query() query: GameListDTO,
+    @Req() req: FastifyRequest,
+    @Res() reply: FastifyReply
+  ) {
+    return new List({
+      params: query,
+      userId: getUserSession(req)?.id,
+      response: reply,
+    })
+      .execute()
+      .then((res) => reply.status(201).send(res))
+      .catch((err) => reply.status(501).send(err))
+  }
+
+  @Delete("delete/:gameId")
+  public async delete(
+    @Param("gameId") gameId: string,
+    @Req() req: FastifyRequest,
+    @Res() reply: FastifyReply
+  ) {
+    return new DeleteGame({
+      gameId,
+      userId: getUserSession(req)?.id,
+      response: reply,
+    })
+      .execute()
+      .then((res) => reply.status(201).send(res))
+      .catch((err) => reply.status(501).send(err))
+  }
+
+  @Put("edit")
+  public async update(
+    @Body() body: IGame,
+    @Req() req: FastifyRequest,
+    @Res() reply: FastifyReply
+  ) {
+    return new Edit({
       game: body,
       userId: getUserSession(req)?.id,
       response: reply,
