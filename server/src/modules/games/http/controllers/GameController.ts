@@ -34,8 +34,7 @@ export class GameController {
       response: reply,
     })
       .execute()
-      .then((res) => reply.status(201).send(res))
-      .catch((err) => reply.status(501).send(err))
+      .then((res) => res)
   }
 
   @Get("list")
@@ -50,8 +49,7 @@ export class GameController {
       response: reply,
     })
       .execute()
-      .then((res) => reply.status(201).send(res))
-      .catch((err) => reply.status(501).send(err))
+      .then((res) => res)
   }
 
   @Delete("delete/:gameId")
@@ -66,8 +64,7 @@ export class GameController {
       response: reply,
     })
       .execute()
-      .then((res) => reply.status(201).send(res))
-      .catch((err) => reply.status(501).send(err))
+      .then((res) => res)
   }
 
   @Put("edit")
@@ -82,7 +79,6 @@ export class GameController {
       response: reply,
     })
       .execute()
-      .then((res) => reply.status(201).send(res))
-      .catch((err) => reply.status(501).send(err))
+      .then((res) => res)
   }
 }

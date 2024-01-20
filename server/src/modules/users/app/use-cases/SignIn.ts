@@ -107,14 +107,11 @@ export class SignIn {
       response: this.response,
     })
 
-    return {
+    return this.response.status(200).send({
       message: "Authenticated successfully",
       error: null,
       statusCode: 200,
-      data: {
-        accessToken,
-        refreshToken,
-      },
-    }
+      data: null,
+    })
   }
 }
