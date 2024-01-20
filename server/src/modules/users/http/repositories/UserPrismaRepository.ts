@@ -26,10 +26,15 @@ export class UserPrismaRepository implements IUserRepository {
   }
 
   public async save(user: IUser): Promise<IUser> {
-    await db.user.create({
-      data: user,
-    })
-    return user
+    return db.user
+      .create({
+        data: user,
+      })
+      .then((user) => user)
+  }
+
+  public async find(id: string): Promise<IUser> {
+    return db.user.findFirst({ where: { id } }).then((user) => user)
   }
 
   public async findByEmail(email: string): Promise<IUser> {

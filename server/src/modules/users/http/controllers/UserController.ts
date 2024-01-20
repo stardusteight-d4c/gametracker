@@ -1,15 +1,19 @@
-import { FastifyReply } from "fastify"
-import { Body, Controller, Get, Post, Query, Res } from "@nestjs/common"
+import { FastifyReply, FastifyRequest } from "fastify"
+import { Body, Controller, Get, Post, Query, Req, Res } from "@nestjs/common"
 
-import { SignUp, SignIn, List } from "@modules/users/app/use-cases"
+import {
+  SignUp,
+  SignIn,
+  List,
+  RefreshToken,
+} from "@modules/users/app/use-cases"
 
 import { JWTSessionTokenAdapter } from "@shared/adapters/JWTSessionTokenAdapter"
 import { BcryptCryptoAdapter } from "@shared/adapters/BcryptCryptoAdapter"
 
 @Controller("users")
-// @UseGuards(RequireUserPermission)
 export class UserController {
-  @Post("signUp")
+  @Post("auth/signUp")
   public async signUp(@Body() body: SignUpDTO, @Res() reply: FastifyReply) {
     return new SignUp({
       user: body,
@@ -18,11 +22,10 @@ export class UserController {
       response: reply,
     })
       .execute()
-      .then((res) => reply.status(201).send(res))
-      .catch((err) => reply.status(501).send(err))
+      .then((res) => res)
   }
 
-  @Post("signIn")
+  @Post("auth/signIn")
   public async signIn(@Body() body: SignInDTO, @Res() reply: FastifyReply) {
     return new SignIn({
       credencials: body,
@@ -31,15 +34,27 @@ export class UserController {
       response: reply,
     })
       .execute()
-      .then((res) => reply.status(201).send(res))
-      .catch((err) => reply.status(501).send(err))
+      .then((res) => res)
+  }
+
+  @Post("auth/refreshToken")
+  public async refreshToken(
+    @Req() req: FastifyRequest,
+    @Res() reply: FastifyReply
+  ) {
+    return new RefreshToken({
+      request: req,
+      response: reply,
+      sessionTokenAdapter: new JWTSessionTokenAdapter(),
+    })
+      .execute()
+      .then((res) => res)
   }
 
   @Get("list")
   public async list(@Query() query: UserListDTO, @Res() reply: FastifyReply) {
     return new List({ params: query, response: reply })
       .execute()
-      .then((res) => reply.status(201).send(res))
-      .catch((err) => reply.status(501).send(err))
+      .then((res) => res)
   }
 }
