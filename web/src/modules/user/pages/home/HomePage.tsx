@@ -1,9 +1,9 @@
 import Link from "next/link"
 import { ChevronRight } from "lucide-react"
 
-import { Navbar } from "../../shared/components/organisms/Navbar"
+import { Navbar } from "@/shared/components/organisms/Navbar"
 
-export default function UserProfile() {
+export function HomePage() {
   return (
     <main className="bg-white h-full min-h-screen max-w-screen text-dark-str">
       <Navbar search={false} />
