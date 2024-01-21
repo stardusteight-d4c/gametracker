@@ -1,8 +1,14 @@
+"use client"
+
+import { useSignUp } from "./hooks/useSignUp"
+
 interface SignUpProps {
   onTypeChange: (value: "sign-in" | "sign-up") => void
 }
 
 export const SignUp = ({ onTypeChange }: SignUpProps) => {
+  const { handleChange, onSubmit, isMutating } = useSignUp()
+
   return (
     <div className="flex flex-col border w-fit mx-auto border-dark-mid/10 mt-[61px] rounded p-4 md:p-7">
       <div className="flex cursor-pointer items-center gap-x-1 mb-6 w-fit">
@@ -22,6 +28,7 @@ export const SignUp = ({ onTypeChange }: SignUpProps) => {
             id="username"
             placeholder="Choose your username"
             autoComplete="off"
+            onChange={handleChange}
             className="w-[300px] p-2 rounded outline-none border border-dark-mid/10 focus:border-[#FF003F]"
           />
         </div>
@@ -33,10 +40,11 @@ export const SignUp = ({ onTypeChange }: SignUpProps) => {
             Email
           </label>
           <input
-            type="text"
+            type="email"
             id="email"
             placeholder="Enter your email"
             autoComplete="off"
+            onChange={handleChange}
             className="w-[300px] p-2 rounded outline-none border border-dark-mid/10 focus:border-[#FF003F]"
           />
         </div>
@@ -52,11 +60,17 @@ export const SignUp = ({ onTypeChange }: SignUpProps) => {
             id="password"
             placeholder="Choose your password"
             autoComplete="off"
+            onChange={handleChange}
             className="w-[300px] p-2 rounded outline-none border border-dark-mid/10 focus:border-[#FF003F]"
           />
         </div>
-        <button className="flex font-semibold items-center justify-center h-[29px] p-5 gap-x-1 active:scale-95 transition-all text-light-str bg-gradient-to-t from-[#D5224E] to-[#FF003F] rounded">
-          Sign Up
+        <button
+          disabled={isMutating}
+          onClick={onSubmit}
+          type="button"
+          className="flex font-semibold items-center justify-center h-[29px] p-5 gap-x-1 active:scale-95 transition-all text-light-str bg-gradient-to-t from-[#D5224E] to-[#FF003F] rounded"
+        >
+          {isMutating ? "Loading..." : "Sign Up"}
         </button>
         <div className="relative">
           <div className="w-full h-0 border-t border-t-dark-mid/10 my-2 " />
@@ -65,6 +79,7 @@ export const SignUp = ({ onTypeChange }: SignUpProps) => {
           </span>
         </div>
         <button
+          disabled={isMutating}
           onClick={() => onTypeChange("sign-in")}
           className="flex font-semibold items-center justify-center h-[29px] p-5 gap-x-1 active:scale-95 transition-all text-dark-str border border-[#FF003F] rounded"
         >
