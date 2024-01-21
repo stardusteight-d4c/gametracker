@@ -14,19 +14,23 @@ export class List {
   }
 
   public async execute() {
-    const items = await this.repository.list({
+    const list = await this.repository.list({
       ...this.params,
       currentPage: this.params.currentPage
         ? Number(this.params.currentPage)
         : undefined,
       pageSize: this.params.pageSize ? Number(this.params.pageSize) : undefined,
     })
+    const users = list.items.map((user) => {
+      const { password, ...parsedUser } = user
+      return parsedUser
+    })
 
     return this.response.status(200).send({
       message: "Users listed successfully",
       error: null,
       statusCode: 200,
-      data: items,
+      data: { ...list, items: users },
     })
   }
 }
