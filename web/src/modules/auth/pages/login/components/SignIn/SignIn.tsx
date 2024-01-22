@@ -1,8 +1,12 @@
+import { useSignIn } from "./hooks/useSignIn"
+
 interface SignInProps {
   onTypeChange: (value: "sign-in" | "sign-up") => void
 }
 
 export const SignIn = ({ onTypeChange }: SignInProps) => {
+  const { handleChange, onSubmit, isMutating } = useSignIn()
+
   return (
     <div className="flex flex-col border w-fit mx-auto border-dark-mid/10 mt-[61px] rounded p-4 md:p-7">
       <div className="flex cursor-pointer items-center gap-x-1 mb-6 w-fit">
@@ -12,16 +16,17 @@ export const SignIn = ({ onTypeChange }: SignInProps) => {
       <div className="flex flex-col gap-y-4">
         <div className="flex flex-col">
           <label
-            htmlFor="username"
+            htmlFor="access"
             className="text-sm text-dark-low cursor-pointer"
           >
             Username or Email
           </label>
           <input
             type="text"
-            id="username"
+            id="access"
             placeholder="Enter your username/email"
             autoComplete="off"
+            onChange={handleChange}
             className="w-[300px] p-2 rounded outline-none border border-dark-mid/10 focus:border-[#FF003F]"
           />
         </div>
@@ -37,11 +42,15 @@ export const SignIn = ({ onTypeChange }: SignInProps) => {
             id="password"
             placeholder="Enter your password"
             autoComplete="off"
+            onChange={handleChange}
             className="w-[300px] p-2 rounded outline-none border border-dark-mid/10 focus:border-[#FF003F]"
           />
         </div>
-        <button className="flex font-semibold items-center justify-center h-[29px] p-5 gap-x-1 active:scale-95 transition-all text-light-str bg-gradient-to-t from-[#D5224E] to-[#FF003F] rounded">
-          Sign In
+        <button
+          onClick={onSubmit}
+          className="flex font-semibold items-center justify-center h-[29px] p-5 gap-x-1 active:scale-95 transition-all text-light-str bg-gradient-to-t from-[#D5224E] to-[#FF003F] rounded"
+        >
+          {isMutating ? "Loading..." : "Sign In"}
         </button>
         <span className="text-dark-low transition-all text-sm hover:underline cursor-pointer">
           I forgot my password
