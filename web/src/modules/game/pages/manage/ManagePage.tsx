@@ -5,7 +5,7 @@ import { Pencil, Send, Trash } from "lucide-react"
 
 import { New, Edit, Delete } from "./components"
 
-import { Navbar } from "@/shared/components/organisms/Navbar"
+import { Navbar } from "@/shared/components/ui/Navbar"
 
 export function ManagePage() {
   const [activeMode, setActiveMode] = useState<"new" | "edit" | "delete">("new")

@@ -4,7 +4,7 @@ import { useState } from "react"
 
 import { SignIn, SignUp } from "./components"
 
-import { Navbar } from "@/shared/components/organisms/Navbar"
+import { Navbar } from "@/shared/components/ui/Navbar"
 
 export function LoginPage() {
   const [type, setType] = useState<"sign-in" | "sign-up">("sign-in")

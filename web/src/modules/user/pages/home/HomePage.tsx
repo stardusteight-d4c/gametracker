@@ -1,7 +1,7 @@
 import Link from "next/link"
 import { ChevronRight } from "lucide-react"
 
-import { Navbar } from "@/shared/components/organisms/Navbar"
+import { Navbar } from "@/shared/components/ui/Navbar"
 
 export function HomePage() {
   return (
