@@ -1,6 +1,6 @@
 import { FastifyReply, FastifyRequest } from "fastify"
 import { UserRepository } from "../decorators/UserRepository"
-import { setCookieHttpOnly } from "@/shared/utils"
+import { setCookie } from "@shared/utils"
 
 @UserRepository
 export class RefreshToken {
@@ -54,11 +54,12 @@ export class RefreshToken {
 
     const newAccessToken = await this.getAccessToken()
 
-    setCookieHttpOnly({
+    setCookie({
       name: "accessToken",
       value: newAccessToken,
       age: thirtyMinutes,
       response: this.response,
+      httpOnly: true,
     })
 
     return this.response.status(200).send({

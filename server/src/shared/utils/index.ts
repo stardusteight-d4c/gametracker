@@ -1,1 +1,1 @@
-export { setCookieHttpOnly } from "./setCookieHttpOnly"
+export { setCookie } from "./setCookie"

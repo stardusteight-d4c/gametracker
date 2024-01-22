@@ -1,18 +1,20 @@
 import { FastifyReply } from "fastify"
 
-export function setCookieHttpOnly({
+export function setCookie({
   response,
   name,
   value,
   age,
+  httpOnly,
 }: {
   response: FastifyReply
   name: string
   value: string
   age: number
+  httpOnly: boolean
 }) {
   response.setCookie(name, value, {
-    httpOnly: true,
+    httpOnly,
     secure: true,
     sameSite: "strict",
     path: "/",

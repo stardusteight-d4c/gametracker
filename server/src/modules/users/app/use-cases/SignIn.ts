@@ -1,7 +1,7 @@
 import { FastifyReply } from "fastify"
 
 import { UserRepository } from "@modules/users/app/decorators/UserRepository"
-import { setCookieHttpOnly } from "@shared/utils"
+import { setCookie } from "@shared/utils"
 
 @UserRepository
 export class SignIn {
@@ -94,17 +94,19 @@ export class SignIn {
     const thirtyDays = 30 * 24 * 60 * 60 * 1000
     const thirtyMinutes = 30 * 60 * 1000
 
-    setCookieHttpOnly({
+    setCookie({
       name: "accessToken",
       value: accessToken,
       age: thirtyMinutes,
       response: this.response,
+      httpOnly: false,
     })
-    setCookieHttpOnly({
+    setCookie({
       name: "refreshToken",
       value: refreshToken,
       age: thirtyDays,
       response: this.response,
+      httpOnly: true,
     })
 
     return this.response.status(200).send({
