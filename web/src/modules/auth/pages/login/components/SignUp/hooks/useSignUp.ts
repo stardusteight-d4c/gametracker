@@ -1,13 +1,16 @@
+import { useRouter } from "next/navigation"
 import { useState } from "react"
 import useSWRMutation from "swr/mutation"
 
 import { useToast } from "@/shared/hooks/useToast"
-import { getFormattedCurrentDate } from "@/shared/utils/getFormattedCurrentDate"
-import { redirect } from "next/navigation"
+import { getFormattedCurrentDate } from "@/shared/utils"
+import { useAuth } from "@/shared/hooks/useAuth"
 
 export function useSignUp() {
+  const router = useRouter()
+  const { getUserSession } = useAuth()
   const { toast } = useToast()
-  const { trigger, isMutating, error } = useSWRMutation(
+  const { trigger, isMutating } = useSWRMutation(
     "users/auth/signUp",
     registerUser
   )
@@ -49,11 +52,12 @@ export function useSignUp() {
 
   async function onSubmit() {
     const result = await trigger(formData)
+    const formattedCurrentData = getFormattedCurrentDate()
 
     if (result.error) {
       toast({
         title: result.message,
-        description: getFormattedCurrentDate(),
+        description: formattedCurrentData,
         variant: "destructive",
       })
       return
@@ -61,12 +65,13 @@ export function useSignUp() {
 
     toast({
       title: result.message,
-      description: getFormattedCurrentDate(),
+      description: formattedCurrentData,
       variant: "success",
     })
 
-    // tratar erros com toasters caso houver
-    // logar o usuário e criar a sessão dele, fazer estado para pegar a sessão do usuário
+    const session = getUserSession()
+
+    return router.replace(`/profile/${session?.username}`)
   }
 
   return {

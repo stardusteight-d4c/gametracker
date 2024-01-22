@@ -1,3 +1,5 @@
+"use client"
+
 import {
   ChevronDown,
   CircleUserRound,
@@ -9,8 +11,12 @@ import {
 import { GameCard } from "./components"
 
 import { Navbar } from "@/shared/components/ui/Navbar"
+import { useAuth } from "@/shared/hooks/useAuth"
 
 export function ProfilePage() {
+  const { getUserSession } = useAuth()
+  const session = getUserSession()
+
   return (
     <main className="bg-white min-h-[100vh] max-w-screen text-dark-str">
       <Navbar />
@@ -45,7 +51,7 @@ export function ProfilePage() {
           <div className="flex items-center gap-x-2 group cursor-pointer">
             <CircleUserRound size={32} />
             <span className="text-lg font-medium cursor-pointer">
-              Stardusteight
+              {session?.username}
             </span>
           </div>
         </div>

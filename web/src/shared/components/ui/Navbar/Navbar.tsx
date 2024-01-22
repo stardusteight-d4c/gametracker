@@ -1,5 +1,10 @@
-import { ChevronLeft, CircleUserRound, Cog, Search } from "lucide-react"
+"use client"
+
 import Link from "next/link"
+import { ChevronLeft, CircleUserRound, Cog, LogOut, Search } from "lucide-react"
+
+import { useAuth } from "@/shared/hooks/useAuth"
+import { useRouter } from "next/navigation"
 
 interface NavbarProps {
   search?: boolean
@@ -12,7 +17,15 @@ export const Navbar = ({
   signIn = true,
   back = false,
 }: NavbarProps) => {
-  const session = true
+  const { getUserSession, clearAuthCookies } = useAuth()
+  const session = getUserSession()
+  const router = useRouter()
+
+  function onLogout() {
+    clearAuthCookies()
+    router.replace("/")
+  }
+
   return (
     <div className="px-3 lg:px-0 w-screen bg-dark-str z-[900] h-[61px] fixed top-0">
       <div className="max-w-[1022px] w-full mx-auto py-4 flex items-center justify-between">
@@ -64,7 +77,7 @@ export const Navbar = ({
               </span>
             </Link>
             <Link
-              href="/profile/stardusteight"
+              href={`/profile/${session.username}`}
               className="hover:bg-light-str/10 rounded transition-all h-[30px] active:scale-95 px-1 flex text-light-str items-center w-fit gap-x-2 cursor-pointer"
             >
               <CircleUserRound />
@@ -72,6 +85,12 @@ export const Navbar = ({
                 Profile
               </span>
             </Link>
+            <div
+              onClick={onLogout}
+              className="hover:bg-light-str/10 rounded transition-all h-[30px] active:scale-95 px-1 flex text-light-str items-center w-fit gap-x-2 cursor-pointer"
+            >
+              <LogOut />
+            </div>
           </div>
         )}
       </div>
