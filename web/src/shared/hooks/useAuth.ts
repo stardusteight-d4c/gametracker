@@ -1,6 +1,7 @@
 import jwt from "jsonwebtoken"
-import { getCookie, deleteCookie } from "../utils"
 import { NextRequest } from "next/server"
+
+import { getCookie, deleteCookie } from "../utils"
 
 export function useAuth() {
   function getUserSession(): DecodedToken | null {
@@ -44,5 +45,5 @@ export function useAuth() {
     getUserSession,
     getServerUserSession,
     clearAuthCookies,
-  }
+   }
 }

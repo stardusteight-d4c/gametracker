@@ -18,9 +18,7 @@ export class RefreshToken {
   }) {
     this.sessionTokenAdapter = attr.sessionTokenAdapter
     this.request = attr.request
-    this.refreshToken = (
-      this.request.body as { refreshToken?: string }
-    )?.refreshToken
+    this.refreshToken = this.request.cookies.refreshToken
     this.response = attr.response
   }
 
