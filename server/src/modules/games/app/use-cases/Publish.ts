@@ -22,7 +22,7 @@ export class Publish {
   public async execute() {
     if (!this.userId) {
       return this.response.status(401).send({
-        message: "There is no session",
+        message: "Invalid token or there is no session",
         error: "Unauthorized",
         statusCode: 401,
         data: null,

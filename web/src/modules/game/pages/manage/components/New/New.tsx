@@ -1,26 +1,13 @@
 "use client"
 
-import { scoreRank } from "@/shared/utils/scoreRank"
 import { ChevronDown } from "lucide-react"
-import { useState } from "react"
+
+import { scoreRank } from "@/shared/utils/scoreRank"
+
+import { useNew } from "./hooks/useNew"
 
 export function New() {
-  const [score, setScore] = useState<number>(1)
-  const [openDropdown, setOpenDropdown] = useState<boolean>(false)
-  const [note, setNote] = useState("")
-  const [gameState, setGameState] = useState<
-    "Current playing" | "Finished game"
-  >("Current playing")
-
-  function handleSelectGameState() {
-    if (gameState === "Current playing") setGameState("Finished game")
-    if (gameState === "Finished game") setGameState("Current playing")
-  }
-
-  function handleNoteChange(event: React.ChangeEvent<HTMLTextAreaElement>) {
-    const updatedNote = event.target.value
-    setNote(updatedNote)
-  }
+  const { formData, openDropdown, handlers, onSubmit, isMutating } = useNew()
 
   return (
     <div className="flex flex-col gap-y-4 mt-4 md:w-fit w-full">
@@ -36,30 +23,29 @@ export function New() {
           id="coverUrl"
           placeholder="Enter a cover url"
           autoComplete="off"
+          onChange={handlers.handleChange}
           className="lg:w-[300px] p-2 rounded outline-none border border-dark-mid/10 focus:border-[#FF003F]"
         />
       </div>
       <div className="flex flex-col">
-        <label
-          htmlFor="gameTitle"
-          className="text-sm text-dark-low cursor-pointer"
-        >
+        <label htmlFor="title" className="text-sm text-dark-low cursor-pointer">
           Game Title
         </label>
         <input
           type="text"
-          id="gameTitle"
+          id="title"
           placeholder="Enter a game title"
           autoComplete="off"
+          onChange={handlers.handleChange}
           className="lg:w-[300px] p-2 rounded outline-none border border-dark-mid/10 focus:border-[#FF003F]"
         />
       </div>
       <div className="w-full flex items-center justify-between">
         <span
-          onClick={() => setOpenDropdown(!openDropdown)}
+          onClick={handlers.handleOpenDropdown}
           className="text-sm w-fit relative text-dark-low cursor-pointer font-normal -mb-[2px] flex items-center"
         >
-          {gameState}{" "}
+          {formData.status}{" "}
           <ChevronDown
             className={`h-[18px] transition-all ${
               openDropdown ? "rotate-180" : "rotate-0"
@@ -67,10 +53,10 @@ export function New() {
           />
           {openDropdown && (
             <div
-              onClick={handleSelectGameState}
+              onClick={handlers.handleSelectGameState}
               className="absolute whitespace-nowrap top-full mt-1 shadow-md shadow-black/10 rounded px-3 py-2 bg-dark-str text-light-str border border-dark-mid/10"
             >
-              {gameState === "Current playing"
+              {formData.status === "Current playing"
                 ? "Finished game"
                 : "Current playing"}
             </div>
@@ -86,16 +72,16 @@ export function New() {
           placeholder="Enter a note"
           autoComplete="off"
           maxLength={255}
-          value={note}
-          onChange={handleNoteChange}
+          value={formData.note}
+          onChange={handlers.handleChange}
           className="lg:w-[300px] p-2 resize-none h-[100px] rounded outline-none border border-dark-mid/10 focus:border-[#FF003F]"
         />
         <span
           className={`text-sm cursor-pointer mt-[2px] ${
-            note.length === 255 ? "text-[#FF003F]" : "text-dark-low "
+            formData.note.length === 255 ? "text-[#FF003F]" : "text-dark-low "
           }`}
         >
-          {note.length}/255
+          {formData.note.length}/255
         </span>
       </div>
       <div className="flex flex-col">
@@ -105,13 +91,13 @@ export function New() {
         <div className="flex items-center justify-between z-50 transition-all">
           {Array.from({ length: 10 }).map((_, index) => (
             <div
-              onClick={() => setScore(index + 1)}
+              onClick={() => handlers.handleScore(index + 1)}
               key={index}
               className="relative cursor-pointer"
             >
               <div
                 className={`w-[18px] group h-[18px] rounded ${
-                  index + 1 <= score
+                  index + 1 <= formData.score
                     ? "bg-gradient-to-t from-[#D5224E] to-[#FF003F]"
                     : "bg-dark-mid"
                 } `}
@@ -125,8 +111,11 @@ export function New() {
           ))}
         </div>
       </div>
-      <button className="flex mt-2 font-semibold items-center justify-center h-[29px] p-5 gap-x-1 active:scale-95 transition-all text-light-str bg-gradient-to-t from-[#D5224E] to-[#FF003F] rounded">
-        Publish
+      <button
+        onClick={onSubmit}
+        className="flex mt-2 font-semibold items-center justify-center h-[29px] p-5 gap-x-1 active:scale-95 transition-all text-light-str bg-gradient-to-t from-[#D5224E] to-[#FF003F] rounded"
+      >
+        {isMutating ? "Loading..." : "Publish"}
       </button>
     </div>
   )
