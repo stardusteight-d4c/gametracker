@@ -1,6 +1,6 @@
 import { toast } from "@/shared/components/ui/Toaster/components/Toast/hooks/use-toast"
 import { useAuth } from "@/shared/hooks/useAuth"
-import { getFormattedCurrentDate } from "@/shared/utils"
+import { getFormattedCurrentDate, isValidURL } from "@/shared/utils"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
 import useSWRMutation from "swr/mutation"
@@ -75,8 +75,36 @@ export function useNew() {
   }
 
   async function onSubmit() {
-    const result = await trigger(formData)
     const formattedCurrentData = getFormattedCurrentDate()
+
+    if (!isValidURL(formData.coverUrl.trim())) {
+      toast({
+        title: "Enter a valid url",
+        description: formattedCurrentData,
+        variant: "destructive",
+      })
+      return
+    }
+
+    if (!formData.title.trim()) {
+      toast({
+        title: "The title field cannot be empty",
+        description: formattedCurrentData,
+        variant: "destructive",
+      })
+      return
+    }
+
+    if (formData.note.trim().length <= 4) {
+      toast({
+        title: "The note field cannot be empty",
+        description: formattedCurrentData,
+        variant: "destructive",
+      })
+      return
+    }
+
+    const result = await trigger(formData)
 
     if (result.error || result.statusCode === 500) {
       toast({
