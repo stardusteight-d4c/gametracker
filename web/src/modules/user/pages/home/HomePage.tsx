@@ -1,9 +1,15 @@
+"use client"
+
 import Link from "next/link"
 import { ChevronRight } from "lucide-react"
 
 import { Navbar } from "@/shared/components/ui/Navbar"
+import { useAuth } from "@/shared/hooks/useAuth"
 
 export function HomePage() {
+  const { getUserSession } = useAuth()
+  const session = getUserSession()
+
   return (
     <main className="bg-white h-full min-h-screen max-w-screen text-dark-str">
       <Navbar search={false} />
@@ -23,15 +29,17 @@ export function HomePage() {
           Share your moments and discover games that move others. Together, the
           adventure is more intense.
         </span>
-        <div className="flex items-center gap-x-1 mt-6">
-          <Link
-            href="/login"
-            className="flex font-semibold items-center justify-center h-[29px] p-5 gap-x-1 active:scale-95 transition-all text-light-str bg-gradient-to-t from-[#D5224E] to-[#FF003F] rounded"
-          >
-            Try Now for Free
-            <ChevronRight />
-          </Link>
-        </div>
+        {!session && (
+          <div className="flex items-center gap-x-1 mt-6">
+            <Link
+              href="/login"
+              className="flex font-semibold items-center justify-center h-[29px] p-5 gap-x-1 active:scale-95 transition-all text-light-str bg-gradient-to-t from-[#D5224E] to-[#FF003F] rounded"
+            >
+              Try Now for Free
+              <ChevronRight />
+            </Link>
+          </div>
+        )}
         <img
           src="/assets/hero.png"
           className="mt-[55px] object-contain md:object-fill mx-auto w-[808px] h-[265px] sm:h-[465px] rounded-lg border border-dark-mid/10"

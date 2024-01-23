@@ -3,8 +3,9 @@ import { useState } from "react"
 import useSWRMutation from "swr/mutation"
 
 import { useToast } from "@/shared/hooks/useToast"
-import { getFormattedCurrentDate } from "@/shared/utils"
+import { getFormattedCurrentDate, isUsernameValid } from "@/shared/utils"
 import { useAuth } from "@/shared/hooks/useAuth"
+import { isEmail } from "@/shared/utils/isEmail"
 
 export function useSignUp() {
   const router = useRouter()
@@ -51,8 +52,49 @@ export function useSignUp() {
   }
 
   async function onSubmit() {
-    const result = await trigger(formData)
     const formattedCurrentData = getFormattedCurrentDate()
+
+    if (formData.username.trim().length <= 2) {
+      toast({
+        title: "The username must have at least 3 characters",
+        description: formattedCurrentData,
+        variant: "destructive",
+      })
+      return
+    }
+
+    if (!isUsernameValid(formData.username.trim())) {
+      toast({
+        title: "The username cannot contain spaces or special characters",
+        description: formattedCurrentData,
+        variant: "destructive",
+      })
+      return
+    }
+
+    if (!isEmail(formData.email)) {
+      toast({
+        title: "Enter a valid email address",
+        description: formattedCurrentData,
+        variant: "destructive",
+      })
+      return
+    }
+
+    if (formData.password.trim().length <= 7) {
+      toast({
+        title: "The password must have at least 8 characters",
+        description: formattedCurrentData,
+        variant: "destructive",
+      })
+      return
+    }
+
+    const result = await trigger({
+      username: formData.username.trim(),
+      email: formData.email.trim(),
+      password: formData.password.trim(),
+    })
 
     if (result.error || result.statusCode === 500) {
       toast({
