@@ -37,7 +37,7 @@ export class UserController {
       .then((res) => res)
   }
 
-  @Post("auth/refreshToken")
+  @Get("auth/refreshToken")
   public async refreshToken(
     @Req() req: FastifyRequest,
     @Res() reply: FastifyReply

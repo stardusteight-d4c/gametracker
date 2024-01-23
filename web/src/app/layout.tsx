@@ -2,10 +2,9 @@ import type { Metadata } from "next"
 import { Poppins } from "next/font/google"
 
 import { Toaster } from "@/shared/components/ui/Toaster/Toaster"
-import { RevalidateSession } from "@/shared/wrappers/RevalidateSession"
+import { RevalidateSession } from "@/shared/decorators/RevalidateSession"
 
 import "./globals.css"
-
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -27,7 +26,7 @@ export default function RootLayout({
       <body className={poppins.className}>
         <main>{children}</main>
         <div className="relative z-[1000]">
-        <RevalidateSession />
+          <RevalidateSession />
           <Toaster />
         </div>
       </body>

@@ -45,7 +45,7 @@ export function New() {
           onClick={handlers.handleOpenDropdown}
           className="text-sm w-fit relative text-dark-low cursor-pointer font-normal -mb-[2px] flex items-center"
         >
-          {formData.status}{" "}
+          {formData.status === "playing" ? "Current playing" : "Finished game"}
           <ChevronDown
             className={`h-[18px] transition-all ${
               openDropdown ? "rotate-180" : "rotate-0"
@@ -56,7 +56,7 @@ export function New() {
               onClick={handlers.handleSelectGameState}
               className="absolute whitespace-nowrap top-full mt-1 shadow-md shadow-black/10 rounded px-3 py-2 bg-dark-str text-light-str border border-dark-mid/10"
             >
-              {formData.status === "Current playing"
+              {formData.status === "playing"
                 ? "Finished game"
                 : "Current playing"}
             </div>

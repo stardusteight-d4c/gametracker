@@ -13,7 +13,7 @@ export function useNew() {
   const [formData, setFormData] = useState<NewDTO>({
     coverUrl: "",
     title: "",
-    status: "Current playing",
+    status: "playing",
     note: "",
     score: 1,
   })
@@ -37,15 +37,15 @@ export function useNew() {
   }
 
   function handleSelectGameState() {
-    if (formData.status === "Current playing")
+    if (formData.status === "playing")
       setFormData((prevFormData) => ({
         ...prevFormData,
-        status: "Finished game",
+        status: "finished",
       }))
-    if (formData.status === "Finished game")
+    if (formData.status === "finished")
       setFormData((prevFormData) => ({
         ...prevFormData,
-        status: "Current playing",
+        status: "playing",
       }))
   }
 
@@ -78,7 +78,7 @@ export function useNew() {
     const result = await trigger(formData)
     const formattedCurrentData = getFormattedCurrentDate()
 
-    if (result.error) {
+    if (result.error || result.statusCode === 500) {
       toast({
         title: result.message,
         description: formattedCurrentData,

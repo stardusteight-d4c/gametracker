@@ -54,7 +54,7 @@ export function useSignUp() {
     const result = await trigger(formData)
     const formattedCurrentData = getFormattedCurrentDate()
 
-    if (result.error) {
+    if (result.error || result.statusCode === 500) {
       toast({
         title: result.message,
         description: formattedCurrentData,

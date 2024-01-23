@@ -57,7 +57,7 @@ export class RefreshToken {
       value: newAccessToken,
       age: thirtyMinutes,
       response: this.response,
-      httpOnly: true,
+      httpOnly: false,
     })
 
     return this.response.status(200).send({

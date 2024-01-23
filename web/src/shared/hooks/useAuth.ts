@@ -4,15 +4,17 @@ import { NextRequest } from "next/server"
 import { getCookie, deleteCookie } from "../utils"
 
 export function useAuth() {
+  let serverAccessToken: string
+
   function getUserSession(): DecodedToken | null {
-    const accessToken = getCookie("accessToken")
+    const accessToken = !serverAccessToken && getCookie("accessToken")
     if (!accessToken) {
       console.error("AccessToken cookie not found")
       return null
     }
 
     try {
-      const decodedToken = jwt.decode(accessToken) as DecodedToken
+      const decodedToken = jwt.decode(serverAccessToken ?? accessToken) as DecodedToken
       return decodedToken
     } catch (error) {
       console.error("Error decoding AccessToken:", error)
@@ -26,6 +28,8 @@ export function useAuth() {
       console.error("AccessToken cookie not found")
       return null
     }
+
+    serverAccessToken = accessToken
 
     try {
       const decodedToken = jwt.decode(accessToken) as DecodedToken
@@ -45,5 +49,5 @@ export function useAuth() {
     getUserSession,
     getServerUserSession,
     clearAuthCookies,
-   }
+  }
 }

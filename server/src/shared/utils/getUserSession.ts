@@ -4,9 +4,6 @@ import { JWTSessionTokenAdapter } from "@shared/adapters/JWTSessionTokenAdapter"
 
 export function getUserSession(req: FastifyRequest) {
   const accessToken = req.cookies.accessToken
-  console.log('accessToken', accessToken);
-  
-  
   if (accessToken) {
     const decoded = new JWTSessionTokenAdapter().decodeAccessToken(accessToken)
     return decoded ? decoded : undefined

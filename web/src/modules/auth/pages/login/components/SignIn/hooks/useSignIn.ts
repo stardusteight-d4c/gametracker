@@ -58,7 +58,7 @@ export function useSignIn() {
       result = await trigger({ ...formData, type: "username" })
     }
 
-    if (result.error) {
+    if (result.error || result.statusCode === 500) {
       toast({
         title: result.message,
         description: formattedCurrentData,

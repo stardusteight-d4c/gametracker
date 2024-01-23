@@ -1,7 +1,7 @@
 interface NewDTO {
-  coverUrl: string,
-  title: string,
-  status: string,
-  note: string,
+  coverUrl: string
+  title: string
+  status: "playing" | "finished"
+  note: string
   score: number
 }
