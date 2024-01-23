@@ -5,6 +5,8 @@ import { useRouter } from "next/navigation"
 import { ChevronLeft, CircleUserRound, Cog, LogOut, Search } from "lucide-react"
 
 import { useAuth } from "@/shared/hooks/useAuth"
+import { useDebounce } from "@/shared/hooks/useDebounce"
+import { useEffect, useState } from "react"
 
 interface NavbarProps {
   search?: boolean
@@ -18,8 +20,30 @@ export const Navbar = ({
   back = false,
 }: NavbarProps) => {
   const { getUserSession, clearAuthCookies } = useAuth()
+  const [searchTerm, setSearchTerm] = useState<string>("")
   const session = getUserSession()
   const router = useRouter()
+  const debouncedValue = useDebounce<string>(searchTerm, 500)
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(event.target.value)
+  }
+
+  useEffect(() => {
+    ;(async () => {
+      const parsedBody = await fetch(
+        `${process.env.NEXT_PUBLIC_BASE_API_URL}/users/list?username=${searchTerm}`,
+        {
+          method: "GET",
+        }
+      ).then(async (res) => {
+        const body = res.body ? await res.text() : null
+        return body ? JSON.parse(body) : null
+      })
+
+      console.log("parsedBody", parsedBody)
+    })()
+  }, [debouncedValue])
 
   function onLogout() {
     clearAuthCookies()
@@ -48,6 +72,7 @@ export const Navbar = ({
             <input
               type="text"
               placeholder="Search for a user"
+              onChange={handleChange}
               className="bg-dark-low/50 pl-8 pr-3 py-[2px] outline-none text-light-str placeholder:text-light-str/50 w-[500px] rounded"
             />
             <Search className="absolute left-1 top-1/2 -translate-y-1/2 text-light-str/50" />
