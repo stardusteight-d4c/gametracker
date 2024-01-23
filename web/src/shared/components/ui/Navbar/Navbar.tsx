@@ -1,10 +1,10 @@
 "use client"
 
 import Link from "next/link"
+import { useRouter } from "next/navigation"
 import { ChevronLeft, CircleUserRound, Cog, LogOut, Search } from "lucide-react"
 
 import { useAuth } from "@/shared/hooks/useAuth"
-import { useRouter } from "next/navigation"
 
 interface NavbarProps {
   search?: boolean
