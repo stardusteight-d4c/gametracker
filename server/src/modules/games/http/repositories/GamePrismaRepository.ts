@@ -80,7 +80,7 @@ export class GamePrismaRepository implements IGameRepository {
     const skip = pagination
       ? (params.currentPage - 1) * params.pageSize
       : undefined
-    const take = pagination ? params.pageSize : undefined
+    const take = pagination ? params.pageSize : 5
 
     const where: Prisma.GameWhereInput = {
       userId: params.userId ? params.userId : undefined,

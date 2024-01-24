@@ -69,7 +69,7 @@ export class UserPrismaRepository implements IUserRepository {
     const skip = pagination
       ? (params.currentPage - 1) * params.pageSize
       : undefined
-    const take = params.pageSize ? params.pageSize : undefined
+    const take = params.pageSize ? params.pageSize : 5
 
     const where: Prisma.UserWhereInput = {
       username: params.username
