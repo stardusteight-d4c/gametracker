@@ -13,7 +13,7 @@ export function ManagePage() {
   return (
     <main className="w-screen min-h-screen">
       <div className="flex flex-col h-screen items-center justify-center">
-        <Navbar />
+        <Navbar search={false} />
         <div className="px-3 lg:px-0 w-full flex items-center justify-center">
           <div className="flex flex-col relative md:max-w-[358px] w-full border border-dark-mid/10 mt-[61px] rounded p-4 md:p-7">
             <div className="flex items-center gap-x-2 absolute right-7 top-2">

@@ -1,12 +1,10 @@
 "use client"
 
 import Link from "next/link"
-import { useRouter } from "next/navigation"
 import { ChevronLeft, CircleUserRound, Cog, LogOut, Search } from "lucide-react"
 
-import { useAuth } from "@/shared/hooks/useAuth"
-import { useDebounce } from "@/shared/hooks/useDebounce"
-import { useEffect, useState } from "react"
+import { useSearch } from "./hooks/useSearch"
+import { useNavbar } from "./hooks/useNavbar"
 
 interface NavbarProps {
   search?: boolean
@@ -19,38 +17,8 @@ export const Navbar = ({
   signIn = true,
   back = false,
 }: NavbarProps) => {
-  const [result, setResult] = useState<UserDTO[]>([])
-  const [searchTerm, setSearchTerm] = useState<string>("")
-  const { getUserSession, clearAuthCookies } = useAuth()
-  const session = getUserSession()
-  const router = useRouter()
-  const debouncedValue = useDebounce<string>(searchTerm, 500)
-
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchTerm(event.target.value)
-  }
-
-  useEffect(() => {
-    if (searchTerm) {
-      ;(async () => {
-        const parsedBody: ResponseDTO<PaginationDTO<UserDTO>> = await fetch(
-          `${process.env.NEXT_PUBLIC_BASE_API_URL}/users/list?username=${searchTerm}`,
-          {
-            method: "GET",
-          }
-        ).then(async (res) => {
-          const body = res.body ? await res.text() : null
-          return body ? JSON.parse(body) : null
-        })
-        setResult(parsedBody.data.items)
-      })()
-    }
-  }, [debouncedValue])
-
-  function onLogout() {
-    clearAuthCookies()
-    router.replace("/")
-  }
+  const { handleChange, searchTerm, result } = useSearch()
+  const { session, onLogout } = useNavbar()
 
   return (
     <div className="px-3 lg:px-0 w-screen bg-dark-str z-[900] h-[61px] fixed top-0">
@@ -81,7 +49,12 @@ export const Navbar = ({
             {result.length > 0 && searchTerm && (
               <div className="bg-white absolute inset-x-0 top-full mt-1 text-dark-str border border-dark-mid/10 rounded">
                 {result?.map((user) => (
-                  <Link href={`/profile/${user.username}`} className="hover:bg-light-str block px-2 py-1 cursor-pointer">{user.username}</Link>
+                  <Link
+                    href={`/profile/${user.username}`}
+                    className="hover:bg-light-str block px-2 py-1 cursor-pointer"
+                  >
+                    {user.username}
+                  </Link>
                 ))}
               </div>
             )}
