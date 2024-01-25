@@ -1,23 +1,11 @@
 "use client"
 
-import { useDebounce } from "@/shared/hooks/useDebounce"
 import { Search } from "lucide-react"
-import { useEffect, useState } from "react"
+import { useSearch } from "./hooks/useSearch"
 
 export function Edit() {
-  const [value, setValue] = useState<string>("")
-  const debouncedValue = useDebounce<string>(value, 500)
-
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setValue(event.target.value)
-  }
-
-  // Fetch API (optional)
-  useEffect(() => {
-    // Do fetch here...
-    // Triggers when "debouncedValue" changes
-  }, [debouncedValue])
-
+  const { handleChange, searchTerm, result } = useSearch()
+  
   return (
     <div>
       <div className="relative h-fit md:w-fit mt-8 w-full">

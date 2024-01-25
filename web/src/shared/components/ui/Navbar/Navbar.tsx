@@ -1,7 +1,14 @@
 "use client"
 
 import Link from "next/link"
-import { ChevronLeft, CircleUserRound, Cog, LogOut, Search } from "lucide-react"
+import {
+  ChevronLeft,
+  CircleUserRound,
+  Cog,
+  LogOut,
+  Search,
+  X,
+} from "lucide-react"
 
 import { useSearch } from "./hooks/useSearch"
 import { useNavbar } from "./hooks/useNavbar"
@@ -17,7 +24,7 @@ export const Navbar = ({
   signIn = true,
   back = false,
 }: NavbarProps) => {
-  const { handleChange, searchTerm, result } = useSearch()
+  const { handleChange, searchTerm, clearSearch, result } = useSearch()
   const { session, onLogout } = useNavbar()
 
   return (
@@ -43,20 +50,26 @@ export const Navbar = ({
               type="text"
               placeholder="Search for a user"
               onChange={handleChange}
-              className="bg-dark-low/50 pl-8 pr-3 py-[2px] outline-none text-light-str placeholder:text-light-str/50 w-[500px] rounded"
+              className="bg-dark-low/50 px-8 py-[2px] outline-none text-light-str placeholder:text-light-str/50 w-[500px] rounded"
             />
             <Search className="absolute left-1 top-1/2 -translate-y-1/2 text-light-str/50" />
             {result.length > 0 && searchTerm && (
-              <div className="bg-white absolute inset-x-0 top-full mt-1 text-dark-str border border-dark-mid/10 rounded">
-                {result?.map((user) => (
-                  <Link
-                    href={`/profile/${user.username}`}
-                    className="hover:bg-light-str block px-2 py-1 cursor-pointer"
-                  >
-                    {user.username}
-                  </Link>
-                ))}
-              </div>
+              <>
+                <div className="bg-white absolute inset-x-0 top-full mt-1 text-dark-str border border-dark-mid/10 rounded">
+                  {result?.map((user) => (
+                    <Link
+                      href={`/profile/${user.username}`}
+                      className="hover:bg-light-str block px-2 py-1 cursor-pointer"
+                    >
+                      {user.username}
+                    </Link>
+                  ))}
+                </div>
+                <X
+                  onClick={clearSearch}
+                  className="absolute cursor-pointer right-1 top-1/2 -translate-y-1/2 text-light-str/50"
+                />
+              </>
             )}
           </div>
         )}

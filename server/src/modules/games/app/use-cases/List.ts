@@ -5,23 +5,23 @@ import { GameRepository } from "@modules/games/app/decorators/GameRepository"
 @GameRepository
 export class List {
   repository: IGameRepository
-  userId: string
+  sessionUserId: string
   params: GameListDTO
   response: FastifyReply
 
   public constructor(attr: {
     params: GameListDTO
-    userId: string
+    sessionUserId: string
     response: FastifyReply
   }) {
     this.params = attr.params
-    this.userId = attr.userId
+    this.sessionUserId = attr.sessionUserId
     this.response = attr.response
   }
 
   public async execute() {
     if (this.params.sessionOwner && Boolean(this.params.sessionOwner)) {
-      if (!this.userId) {
+      if (!this.sessionUserId) {
         return this.response.status(401).send({
           message: "There is no session",
           error: "Unauthorized",
@@ -30,7 +30,7 @@ export class List {
         })
       }
 
-      if (this.userId !== this.params.userId) {
+      if (this.sessionUserId !== this.params.userId) {
         return this.response.status(401).send({
           message: "User session id does not match with games owner",
           error: "Unauthorized",

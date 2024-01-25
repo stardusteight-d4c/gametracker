@@ -1,10 +1,14 @@
 import { useEffect, useState } from "react"
 import { useDebounce } from "@/shared/hooks/useDebounce"
+import { useAuth } from "@/shared/hooks/useAuth"
 
 export function useSearch() {
+  const { getUserSession } = useAuth()
   const [result, setResult] = useState<UserDTO[]>([])
   const [searchTerm, setSearchTerm] = useState<string>("")
   const debouncedValue = useDebounce<string>(searchTerm, 500)
+
+  const session = getUserSession()
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value)
@@ -14,7 +18,9 @@ export function useSearch() {
     if (searchTerm) {
       ;(async () => {
         const parsedBody: ResponseDTO<PaginationDTO<UserDTO>> = await fetch(
-          `${process.env.NEXT_PUBLIC_BASE_API_URL}/users/list?username=${searchTerm}`,
+          `${process.env.NEXT_PUBLIC_BASE_API_URL}/games/list?userId=${
+            session!.id
+          }&sessionOwner=true`,
           {
             method: "GET",
           }
@@ -27,14 +33,8 @@ export function useSearch() {
     }
   }, [debouncedValue])
 
-  function clearSearch() {
-    setSearchTerm("")
-    setResult([])
-  }
-
   return {
     searchTerm,
-    clearSearch,
     handleChange,
     result,
   }

@@ -45,7 +45,7 @@ export class GameController {
   ) {
     return new List({
       params: query,
-      userId: getUserSession(req)?.id,
+      sessionUserId: getUserSession(req)?.id,
       response: reply,
     })
       .execute()
