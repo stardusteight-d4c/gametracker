@@ -1,11 +1,21 @@
 import { FastifyReply, FastifyRequest } from "fastify"
-import { Body, Controller, Get, Post, Query, Req, Res } from "@nestjs/common"
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Post,
+  Query,
+  Req,
+  Res,
+} from "@nestjs/common"
 
 import {
   SignUp,
   SignIn,
   List,
   RefreshToken,
+  Find,
 } from "@modules/users/app/use-cases"
 
 import { JWTSessionTokenAdapter } from "@shared/adapters/JWTSessionTokenAdapter"
@@ -46,6 +56,19 @@ export class UserController {
       request: req,
       response: reply,
       sessionTokenAdapter: new JWTSessionTokenAdapter(),
+    })
+      .execute()
+      .then((res) => res)
+  }
+
+  @Get("/:userId")
+  public async find(
+    @Param("userId") userId: string,
+    @Res() reply: FastifyReply
+  ) {
+    return new Find({
+      userId,
+      response: reply,
     })
       .execute()
       .then((res) => res)
