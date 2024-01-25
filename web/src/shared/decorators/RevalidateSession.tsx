@@ -17,10 +17,11 @@ export function RevalidateSession() {
   const formattedCurrentData = getFormattedCurrentDate()
 
   async function refreshSession() {
-    const { getUserSession } = useAuth()
+    const { getUserSession, clearAuthCookies } = useAuth()
     const session = getUserSession()
 
-    if (session) {
+    if (session && isTokenExpired(session)) {
+      clearAuthCookies()
       const result = await fetch(
         `${process.env.NEXT_PUBLIC_BASE_API_URL}/users/auth/refreshToken`,
         {
@@ -46,7 +47,7 @@ export function RevalidateSession() {
     refreshSession()
   }, [])
 
-  setInterval(refreshSession, 5 * 60 * 1000)
+  setInterval(refreshSession, 1 * 60 * 1000)
 
   return <></>
 }

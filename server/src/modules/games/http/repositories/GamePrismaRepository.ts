@@ -17,6 +17,9 @@ export class GamePrismaRepository implements IGameRepository {
       userId: params.userId
         ? { contains: params.userId, mode: "insensitive" }
         : undefined,
+      title: params.title
+        ? { contains: params.title, mode: "insensitive" }
+        : undefined,
     }
     const query = {
       where,
@@ -84,6 +87,9 @@ export class GamePrismaRepository implements IGameRepository {
 
     const where: Prisma.GameWhereInput = {
       userId: params.userId ? params.userId : undefined,
+      title: params.title
+        ? { contains: params.title, mode: "insensitive" }
+        : undefined,
     }
 
     const query = {

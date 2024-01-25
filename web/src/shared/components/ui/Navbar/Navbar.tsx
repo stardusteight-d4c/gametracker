@@ -49,6 +49,7 @@ export const Navbar = ({
             <input
               type="text"
               placeholder="Search for a user"
+              value={searchTerm}
               onChange={handleChange}
               className="bg-dark-low/50 px-8 py-[2px] outline-none text-light-str placeholder:text-light-str/50 w-[500px] rounded"
             />

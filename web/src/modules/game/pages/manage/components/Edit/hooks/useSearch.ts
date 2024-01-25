@@ -4,7 +4,7 @@ import { useAuth } from "@/shared/hooks/useAuth"
 
 export function useSearch() {
   const { getUserSession } = useAuth()
-  const [result, setResult] = useState<UserDTO[]>([])
+  const [result, setResult] = useState<GameDTO[]>([])
   const [searchTerm, setSearchTerm] = useState<string>("")
   const debouncedValue = useDebounce<string>(searchTerm, 500)
 
@@ -17,12 +17,13 @@ export function useSearch() {
   useEffect(() => {
     if (searchTerm) {
       ;(async () => {
-        const parsedBody: ResponseDTO<PaginationDTO<UserDTO>> = await fetch(
+        const parsedBody: ResponseDTO<PaginationDTO<GameDTO>> = await fetch(
           `${process.env.NEXT_PUBLIC_BASE_API_URL}/games/list?userId=${
             session!.id
-          }&sessionOwner=true`,
+          }&sessionOwner=true&title=${searchTerm}`,
           {
             method: "GET",
+            credentials: 'include'
           }
         ).then(async (res) => {
           const body = res.body ? await res.text() : null
@@ -33,9 +34,15 @@ export function useSearch() {
     }
   }, [debouncedValue])
 
+  function clearSearch() {
+    setSearchTerm("")
+    setResult([])
+  }
+
   return {
     searchTerm,
     handleChange,
+    clearSearch,
     result,
   }
 }
