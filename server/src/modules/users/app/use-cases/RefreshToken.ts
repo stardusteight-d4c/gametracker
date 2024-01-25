@@ -27,7 +27,7 @@ export class RefreshToken {
   }
 
   private async getAccessToken() {
-    const user = await this.repository.find(this.userInfo.id)
+    const user = await this.repository.findById(this.userInfo.id)
     return this.sessionTokenAdapter.createAccessToken(user)
   }
 

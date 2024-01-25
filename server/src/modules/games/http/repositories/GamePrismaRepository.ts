@@ -14,9 +14,10 @@ export class GamePrismaRepository implements IGameRepository {
 
   private async getTotalItemsThatMatchWithListQuery(params: GameListDTO) {
     const where: Prisma.GameWhereInput = {
-      userId: params.userId
-        ? { contains: params.userId, mode: "insensitive" }
-        : undefined,
+      userId: params.userId ? params.userId : undefined,
+      user: {
+        username: params.username ? params.username : undefined,
+      },
       title: params.title
         ? { contains: params.title, mode: "insensitive" }
         : undefined,
@@ -87,6 +88,9 @@ export class GamePrismaRepository implements IGameRepository {
 
     const where: Prisma.GameWhereInput = {
       userId: params.userId ? params.userId : undefined,
+      user: {
+        username: params.username ? params.username : undefined,
+      },
       title: params.title
         ? { contains: params.title, mode: "insensitive" }
         : undefined,

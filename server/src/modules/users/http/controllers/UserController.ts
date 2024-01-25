@@ -15,7 +15,7 @@ import {
   SignIn,
   List,
   RefreshToken,
-  Find,
+  FindBy,
 } from "@modules/users/app/use-cases"
 
 import { JWTSessionTokenAdapter } from "@shared/adapters/JWTSessionTokenAdapter"
@@ -61,13 +61,10 @@ export class UserController {
       .then((res) => res)
   }
 
-  @Get("/:userId")
-  public async find(
-    @Param("userId") userId: string,
-    @Res() reply: FastifyReply
-  ) {
-    return new Find({
-      userId,
+  @Get("findBy")
+  public async findById(@Query() query: FindByDTO, @Res() reply: FastifyReply) {
+    return new FindBy({
+      params: query,
       response: reply,
     })
       .execute()

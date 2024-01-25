@@ -33,7 +33,7 @@ export class UserPrismaRepository implements IUserRepository {
       .then((user) => user)
   }
 
-  public async find(id: string): Promise<IUser> {
+  public async findById(id: string): Promise<IUser> {
     return db.user.findFirst({ where: { id } }).then((user) => user)
   }
 

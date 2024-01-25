@@ -3,7 +3,7 @@
 import { Search, X } from "lucide-react"
 import { useSearch } from "./hooks/useSearch"
 import { useDelete } from "./hooks/useDelete"
-import { GameCard } from "@/shared/components/ui/GameCard"
+import { GameCard } from "@/shared/components/GameCard"
 
 export function Delete() {
   const {

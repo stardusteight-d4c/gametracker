@@ -3,5 +3,6 @@ interface GameListDTO {
   pageSize: number
   title: string
   userId: string
+  username: string
   sessionOwner: boolean
 }

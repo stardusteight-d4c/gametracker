@@ -3,22 +3,28 @@ import { FastifyReply } from "fastify"
 import { UserRepository } from "@modules/users/app/decorators/UserRepository"
 
 @UserRepository
-export class Find {
+export class FindBy {
   repository: IUserRepository
-  userId: string
+  params: FindByDTO
   response: FastifyReply
 
-  public constructor(attr: {
-    userId: string
-    response: FastifyReply
-  }) {
-    this.userId = attr.userId
+  public constructor(attr: { params: FindByDTO; response: FastifyReply }) {
+    this.params = attr.params
     this.response = attr.response
   }
 
   public async execute() {
-    const user = await this.repository.find(this.userId)
-    delete user.password
+    let user: IUser
+
+    if (this.params.userId) {
+      user = await this.repository.findById(this.params.userId)
+      user && delete user.password
+    }
+
+    if (this.params.username) {
+      user = await this.repository.findByUsername(this.params.username)
+      user && delete user.password
+    }
 
     if (!user) {
       return this.response.status(400).send({
