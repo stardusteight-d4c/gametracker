@@ -14,9 +14,12 @@ export function HomePage() {
     <main className="bg-white h-full min-h-screen max-w-screen text-dark-str">
       <Navbar search={false} />
       <div className="px-3 lg:px-0 max-w-[1022px] mt-36 mb-24 md:text-center h-full w-full md:mx-auto flex flex-col md:items-center md:justify-center">
-        <div className="flex items-center w-fit gap-x-1 py-1 px-3 rounded-full bg-light-str/30 border border-dark-mid/10">
-          <img src="/assets/logo.svg" alt="" className="h-[24px]" />
-          <span className="text-md">Trackx</span>
+        <div>
+          <span className="text-sm text-dark-low">v1.0.0</span>
+          <div className="flex items-center w-fit gap-x-1 py-1 px-3 rounded-full bg-light-str/30 border border-dark-mid/10">
+            <img src="/assets/logo.svg" alt="" className="h-[24px]" />
+            <span className="text-md">Trackx</span>
+          </div>
         </div>
         <h1 className="text-5xl mt-2 md:mt-0 md:text-center md:text-7xl font-semibold">
           Your{" "}

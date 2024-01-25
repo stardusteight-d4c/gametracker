@@ -1,3 +1,4 @@
+import { isValidURL } from "@/shared/utils"
 import { scoreRank } from "@/shared/utils/scoreRank"
 import { FileX } from "lucide-react"
 
@@ -10,11 +11,11 @@ export function GameCard({ title, coverUrl }: GameCardProps) {
   return (
     <div className="lg:w-[196px] col-span-1 rounded flex flex-col cursor-pointer">
       <div className="lg:w-[196px] h-[245px] lg:h-[265px] relative rounded border border-dark-str/10 overflow-hidden">
-        {coverUrl ? (
+        {coverUrl && isValidURL(coverUrl) ? (
           <img
             src={coverUrl}
             alt=""
-            className="lg:w-[196px] w-full h-[245px] lg:h-[265px] object-fill hover:scale-105 transition-all"
+            className="lg:w-[196px] w-full h-[245px] lg:h-[265px] object-fill transition-all"
           />
         ) : (
           <div className="w-[196px] h-[265px] flex flex-col items-center justify-center bg-dark-low/10">

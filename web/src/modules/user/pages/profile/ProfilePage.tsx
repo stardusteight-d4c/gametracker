@@ -8,9 +8,8 @@ import {
   Twitter,
 } from "lucide-react"
 
-import { GameCard } from "./components"
-
 import { Navbar } from "@/shared/components/ui/Navbar"
+import { GameCard } from "@/shared/components/ui/GameCard"
 import { useAuth } from "@/shared/hooks/useAuth"
 
 export function ProfilePage() {
