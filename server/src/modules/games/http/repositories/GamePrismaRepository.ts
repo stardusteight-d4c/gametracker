@@ -98,10 +98,15 @@ export class GamePrismaRepository implements IGameRepository {
         : undefined,
     }
 
+    const orderBy: Prisma.UserOrderByWithAggregationInput = {
+      createdAt: "desc",
+    }
+
     const query = {
       where,
       take,
       skip,
+      orderBy,
     }
 
     return db.game.findMany(query).then((result) =>

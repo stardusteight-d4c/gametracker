@@ -140,11 +140,7 @@ export function ProfilePage({ username }: ProfilePageProps) {
           <div className="mb-6 flex lg:items-center flex-col lg:flex-row justify-between">
             <div className="flex items-center gap-x-4">
               <h3 className="text-lg font-semibold ">All games</h3>
-              {allGamesList.items.length > 0 && (
-                <span className="text-sm text-dark-low cursor-pointer font-normal -mb-[2px] flex items-center">
-                  Sort by post date <ChevronDown className="h-[18px]" />
-                </span>
-              )}
+              
             </div>
             {allGamesList.items.length >= 5 && (
               <span
@@ -172,11 +168,7 @@ export function ProfilePage({ username }: ProfilePageProps) {
           <div className="mb-6 flex lg:items-center flex-col lg:flex-row justify-between">
             <div className="flex items-center gap-x-4">
               <h3 className="text-lg font-semibold">Current playing</h3>
-              {playingGamesList.items.length > 0 && (
-                <span className="text-sm text-dark-low cursor-pointer font-normal -mb-[2px] flex items-center">
-                  Sort by post date <ChevronDown className="h-[18px]" />
-                </span>
-              )}
+           
             </div>
             {playingGamesList.items.length >= 5 && (
               <span
@@ -204,11 +196,7 @@ export function ProfilePage({ username }: ProfilePageProps) {
           <div className="mb-6 flex lg:items-center flex-col lg:flex-row justify-between">
             <div className="flex items-center gap-x-4">
               <h3 className="text-lg font-semibold">Finished games</h3>
-              {finishedGamesList.items.length > 0 && (
-                <span className="text-sm text-dark-low cursor-pointer font-normal -mb-[2px] flex items-center">
-                  Sort by post date <ChevronDown className="h-[18px]" />
-                </span>
-              )}
+             
             </div>
             {finishedGamesList.items.length >= 5 && (
               <div
