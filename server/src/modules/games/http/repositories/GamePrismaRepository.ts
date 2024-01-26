@@ -14,10 +14,11 @@ export class GamePrismaRepository implements IGameRepository {
 
   private async getTotalItemsThatMatchWithListQuery(params: GameListDTO) {
     const where: Prisma.GameWhereInput = {
-      userId: params.userId ? params.userId : undefined,
+      userId: params.userId ?? undefined,
       user: {
-        username: params.username ? params.username : undefined,
+        username: params.username ?? undefined,
       },
+      status: params.status ?? undefined,
       title: params.title
         ? { contains: params.title, mode: "insensitive" }
         : undefined,
@@ -87,10 +88,11 @@ export class GamePrismaRepository implements IGameRepository {
     const take = pagination ? params.pageSize : 5
 
     const where: Prisma.GameWhereInput = {
-      userId: params.userId ? params.userId : undefined,
+      userId: params.userId ?? undefined,
       user: {
-        username: params.username ? params.username : undefined,
+        username: params.username ?? undefined,
       },
+      status: params.status ?? undefined,
       title: params.title
         ? { contains: params.title, mode: "insensitive" }
         : undefined,

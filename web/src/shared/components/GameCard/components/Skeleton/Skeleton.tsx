@@ -1,6 +1,6 @@
 export function Skeleton() {
   return (
-    <div className="lg:w-[196px] col-span-1 rounded flex flex-col pointer-events-none select-none">
+    <div className="lg:w-[196px] col-span-1 rounded flex flex-col pointer-events-none select-none opacity-70">
       <div className="lg:w-[196px] h-[245px] lg:h-[265px] relative rounded border border-dark-str/10 overflow-hidden">
         <div className="w-[196px] h-[265px] flex flex-col items-center justify-center bg-dark-low/10" />
         <div className="absolute bottom-0 left-0 bg-dark-str/10 px-1 py-2 rounded-tr flex items-center justify-between">
