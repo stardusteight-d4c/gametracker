@@ -97,7 +97,7 @@ export function useNew() {
 
     if (formData.note.trim().length <= 4) {
       toast({
-        title: "The note field cannot be empty",
+        title: "The note field must contain at least 4 characters",
         description: formattedCurrentData,
         variant: "destructive",
       })

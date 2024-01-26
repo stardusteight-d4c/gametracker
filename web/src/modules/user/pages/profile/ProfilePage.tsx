@@ -1,24 +1,22 @@
 "use client"
 
-import {
-  ChevronDown,
-  CircleUserRound,
-  Frown,
-  Instagram,
-  Mail,
-  Twitter,
-} from "lucide-react"
+import { ChevronDown, CircleUserRound, Frown } from "lucide-react"
+import useSWR from "swr"
 
 import { Navbar } from "@/shared/components/ui/Navbar"
 import { GameCard } from "@/shared/components/GameCard"
-import useSWR from "swr"
 import { fetcher } from "@/shared/libs"
+import { useState } from "react"
 
 interface ProfilePageProps {
   username: string
 }
 
 export function ProfilePage({ username }: ProfilePageProps) {
+  const [viewAll, setViewAll] = useState<
+    "all" | "playing" | "finished" | undefined
+  >(undefined)
+
   const { data: user, isLoading: isLoadingUser } = useSWR<UserDTO>(
     `users/findBy?username=${username}`,
     fetcher
@@ -26,15 +24,30 @@ export function ProfilePage({ username }: ProfilePageProps) {
 
   const { data: allGamesList, isLoading: isLoadingAllGames } = useSWR<
     PaginationDTO<GameDTO>
-  >(`games/list?username=${username}&pageSize=5`, fetcher)
+  >(
+    `games/list?username=${username}${
+      viewAll === "all" ? "&currentPage=1" : "&currentPage=1&pageSize=5"
+    }`,
+    fetcher
+  )
 
   const { data: playingGamesList, isLoading: isLoadingPlayingGames } = useSWR<
     PaginationDTO<GameDTO>
-  >(`games/list?username=${username}&status=playing&pageSize=5`, fetcher)
+  >(
+    `games/list?username=${username}&status=playing${
+      viewAll === "playing" ? "&currentPage=1" : "&currentPage=1&pageSize=5"
+    }`,
+    fetcher
+  )
 
   const { data: finishedGamesList, isLoading: isLoadingFinishedGames } = useSWR<
     PaginationDTO<GameDTO>
-  >(`games/list?username=${username}&status=finished&pageSize=5`, fetcher)
+  >(
+    `games/list?username=${username}&status=finished${
+      viewAll === "finished" ? "&currentPage=1" : "&currentPage=1&pageSize=5"
+    }`,
+    fetcher
+  )
 
   if (
     !user ||
@@ -49,12 +62,40 @@ export function ProfilePage({ username }: ProfilePageProps) {
     return null
   }
 
+  function isMultipleOfFive(number: number) {
+    if (number === 0) {
+      return false
+    }
+    return number % 5 === 0
+  }
+
+  function countQuantityOfMultipleOfFive(number: number) {
+    let count = 0
+    for (let acc = 0; acc <= number; acc++) {
+      if (acc % 5 === 0) {
+        count++
+      }
+    }
+    return count
+  }
+
   function renderSkeletons(listLegth: number) {
     if (allGamesList) {
-      return Array.from({ length: 5 - listLegth }).map((_, index) => (
-        <GameCard key={index} skeleton />
-      ))
+      return Array.from({
+        length:
+          listLegth === 0
+            ? 5
+            : countQuantityOfMultipleOfFive(listLegth) * 5 - listLegth,
+      }).map((_, index) => <GameCard key={index} skeleton />)
     }
+  }
+
+  function handleViewAll(category: "all" | "playing" | "finished" | undefined) {
+    if (category === viewAll) {
+      setViewAll(undefined)
+      return
+    }
+    setViewAll(category)
   }
 
   return (
@@ -99,99 +140,96 @@ export function ProfilePage({ username }: ProfilePageProps) {
           <div className="mb-6 flex lg:items-center flex-col lg:flex-row justify-between">
             <div className="flex items-center gap-x-4">
               <h3 className="text-lg font-semibold ">All games</h3>
-              <span className="text-sm text-dark-low cursor-pointer font-normal -mb-[2px] flex items-center">
-                Sort by post date <ChevronDown className="h-[18px]" />
-              </span>
+              {allGamesList.items.length > 0 && (
+                <span className="text-sm text-dark-low cursor-pointer font-normal -mb-[2px] flex items-center">
+                  Sort by post date <ChevronDown className="h-[18px]" />
+                </span>
+              )}
             </div>
-            <h3 className="text-base font-semibold cursor-pointer underline">
-              View all
-            </h3>
+            {allGamesList.items.length >= 5 && (
+              <span
+                onClick={() => handleViewAll("all")}
+                className="text-base font-semibold cursor-pointer underline"
+              >
+                {viewAll === "all" ? "View less" : "View all"}
+              </span>
+            )}
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-x-[10px] gap-y-7 w-full flex-wrap">
-            {allGamesList.items.length > 0 ? (
-              <>
-                {allGamesList.items.map((game) => (
-                  <GameCard
-                    key={game.id}
-                    coverUrl={game.coverUrl}
-                    title={game.title}
-                    score={game.score}
-                  />
-                ))}
-                {allGamesList.items.length < 5 &&
-                  renderSkeletons(allGamesList.items.length)}
-              </>
-            ) : (
-              <div className="flex flex-col col-span-2 sm:col-span-3 md:col-span-4 lg:col-span-5 text-2xl items-center justify-center w-full h-[210px] gap-y-1">
-                There are no games <Frown size={32} />
-              </div>
-            )}
+            {allGamesList.items.map((game) => (
+              <GameCard
+                key={game.id}
+                coverUrl={game.coverUrl}
+                title={game.title}
+                score={game.score}
+              />
+            ))}
+            {!isMultipleOfFive(allGamesList.items.length) &&
+              renderSkeletons(allGamesList.items.length)}
           </div>
         </div>
         <div className="flex flex-col mt-12">
           <div className="mb-6 flex lg:items-center flex-col lg:flex-row justify-between">
             <div className="flex items-center gap-x-4">
               <h3 className="text-lg font-semibold">Current playing</h3>
-              <span className="text-sm text-dark-low cursor-pointer font-normal -mb-[2px] flex items-center">
-                Sort by post date <ChevronDown className="h-[18px]" />
-              </span>
+              {playingGamesList.items.length > 0 && (
+                <span className="text-sm text-dark-low cursor-pointer font-normal -mb-[2px] flex items-center">
+                  Sort by post date <ChevronDown className="h-[18px]" />
+                </span>
+              )}
             </div>
-            <h3 className="text-base font-semibold cursor-pointer underline">
-              View all
-            </h3>
+            {playingGamesList.items.length >= 5 && (
+              <span
+                onClick={() => handleViewAll("playing")}
+                className="text-base font-semibold cursor-pointer underline"
+              >
+                {viewAll === "playing" ? "View less" : "View all"}
+              </span>
+            )}
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-x-[10px] gap-y-7 flex-wrap">
-            {playingGamesList.items.length > 0 ? (
-              <>
-                {playingGamesList.items.map((game) => (
-                  <GameCard
-                    key={game.id}
-                    coverUrl={game.coverUrl}
-                    title={game.title}
-                    score={game.score}
-                  />
-                ))}
-                {playingGamesList.items.length < 5 &&
-                  renderSkeletons(playingGamesList.items.length)}
-              </>
-            ) : (
-              <div className="flex flex-col col-span-2 sm:col-span-3 md:col-span-4 lg:col-span-5 text-2xl items-center justify-center w-full h-[210px] gap-y-1">
-                There are no games <Frown size={32} />
-              </div>
-            )}
+            {playingGamesList.items.map((game) => (
+              <GameCard
+                key={game.id}
+                coverUrl={game.coverUrl}
+                title={game.title}
+                score={game.score}
+              />
+            ))}
+            {playingGamesList.items.length < 5 &&
+              renderSkeletons(playingGamesList.items.length)}
           </div>
         </div>
         <div className="flex flex-col mt-12">
           <div className="mb-6 flex lg:items-center flex-col lg:flex-row justify-between">
             <div className="flex items-center gap-x-4">
               <h3 className="text-lg font-semibold">Finished games</h3>
-              <span className="text-sm text-dark-low cursor-pointer font-normal -mb-[2px] flex items-center">
-                Sort by post date <ChevronDown className="h-[18px]" />
-              </span>
+              {finishedGamesList.items.length > 0 && (
+                <span className="text-sm text-dark-low cursor-pointer font-normal -mb-[2px] flex items-center">
+                  Sort by post date <ChevronDown className="h-[18px]" />
+                </span>
+              )}
             </div>
-            <h3 className="text-base font-semibold cursor-pointer underline">
-              View all
-            </h3>
-          </div>
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-x-[10px] gap-y-7 flex-wrap">
-            {finishedGamesList.items.length > 0 ? (
-              <>
-                {finishedGamesList.items.map((game) => (
-                  <GameCard
-                    key={game.id}
-                    coverUrl={game.coverUrl}
-                    title={game.title}
-                    score={game.score}
-                  />
-                ))}
-                {finishedGamesList.items.length < 5 &&
-                  renderSkeletons(finishedGamesList.items.length)}
-              </>
-            ) : (
-              <div className="flex flex-col col-span-2 sm:col-span-3 md:col-span-4 lg:col-span-5 text-2xl items-center justify-center w-full h-[210px] gap-y-1">
-                There are no games <Frown size={32} />
+            {finishedGamesList.items.length >= 5 && (
+              <div
+                onClick={() => handleViewAll("finished")}
+                className="text-base font-semibold cursor-pointer underline"
+              >
+                {viewAll === "finished" ? "View less" : "View all"}
               </div>
             )}
+          </div>
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-x-[10px] gap-y-7 flex-wrap">
+            {finishedGamesList.items.map((game) => (
+              <GameCard
+                key={game.id}
+                coverUrl={game.coverUrl}
+                title={game.title}
+                score={game.score}
+              />
+            ))}
+            {finishedGamesList.items.length < 5 &&
+              renderSkeletons(finishedGamesList.items.length)}
           </div>
         </div>
       </div>
