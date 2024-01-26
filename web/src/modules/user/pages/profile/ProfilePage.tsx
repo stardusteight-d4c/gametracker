@@ -3,6 +3,7 @@
 import {
   ChevronDown,
   CircleUserRound,
+  Frown,
   Instagram,
   Mail,
   Twitter,
@@ -28,6 +29,14 @@ export function ProfilePage({ username }: ProfilePageProps) {
 
   if (!user || isLoadingUser || !gamesList || isLoadingGames) {
     return null
+  }
+
+  function renderSkeletons() {
+    if (gamesList) {
+      return Array.from({ length: 5 - gamesList.items.length }).map(
+        (_, index) => <GameCard key={index} skeleton />
+      )
+    }
   }
 
   return (
@@ -80,23 +89,21 @@ export function ProfilePage({ username }: ProfilePageProps) {
               View all
             </h3>
           </div>
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-x-[10px] gap-y-7 flex-wrap">
-            {gamesList.items.map((game) => (
-              <GameCard
-                key={game.id}
-                coverUrl={game.coverUrl}
-                title={game.title}
-                score={game.score}
-              />
-            ))}
-            {gamesList.items.length < 5 && (
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-x-[10px] gap-y-7 w-full flex-wrap">
+            {gamesList.items.length > 0 ? (
               <>
-                {Array.from({ length: 5 - gamesList.items.length }).map(
-                  (_, index) => (
-                    <GameCard key={index} coverUrl="" title="" score={0} />
-                  )
-                )}
+                {gamesList.items.map((game) => (
+                  <GameCard
+                    key={game.id}
+                    coverUrl={game.coverUrl}
+                    title={game.title}
+                    score={game.score}
+                  />
+                ))}
+                {gamesList.items.length < 5 && renderSkeletons()}
               </>
+            ) : (
+              <div className="flex flex-col col-span-2 sm:col-span-3 md:col-span-4 lg:col-span-5 text-2xl items-center justify-center w-full h-[210px] gap-y-1">There are no games <Frown size={32} /></div>
             )}
           </div>
         </div>
@@ -113,26 +120,31 @@ export function ProfilePage({ username }: ProfilePageProps) {
             </h3>
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-x-[10px] gap-y-7 flex-wrap">
-            {/* <GameCard
+            <GameCard
               coverUrl="https://upload.wikimedia.org/wikipedia/en/c/c6/The_Legend_of_Zelda_Breath_of_the_Wild.jpg"
               title="The Legend of Zelda: Breath of the Wild"
+              score={8}
             />
             <GameCard
               coverUrl="https://cdn.awsli.com.br/2500x2500/1610/1610163/produto/216584583/poster-the-legend-of-zelda-tears-of-the-kingdom-a-5d718770.jpg"
               title="The Legend of Zelda: Tears of the Kingdom"
+              score={9}
             />
             <GameCard
               coverUrl="https://www.gameinformer.com/sites/default/files/styles/product_box_art/public/2022/09/14/51bb7448/persona5royal.jpg"
               title="Persona 5 Royal"
+              score={10}
             />
             <GameCard
               coverUrl="https://cdkeyprices.uk/images/games/5605266/pokemon-sword-desktop-logo-all.jpg"
               title="Pokémon Sword"
+              score={8}
             />
             <GameCard
               coverUrl="https://upload.wikimedia.org/wikipedia/en/b/bd/Shin_Megami_Tensei_V.png"
               title="Shin Megami Tensei V"
-            /> */}
+              score={8}
+            />
           </div>
         </div>
         <div className="flex flex-col mt-12">
