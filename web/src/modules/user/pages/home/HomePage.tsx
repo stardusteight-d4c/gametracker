@@ -5,10 +5,20 @@ import { ChevronRight } from "lucide-react"
 
 import { Navbar } from "@/shared/components/ui/Navbar"
 import { useAuth } from "@/shared/hooks/useAuth"
+import { useEffect, useState } from "react"
 
 export function HomePage() {
   const { getUserSession } = useAuth()
   const session = getUserSession()
+  const [mounted, setMounted] = useState<boolean>(false)
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  if (!mounted) {
+    return null
+  }
 
   return (
     <main className="bg-white h-full min-h-screen max-w-screen text-dark-str">

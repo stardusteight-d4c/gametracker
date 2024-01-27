@@ -1,12 +1,12 @@
 "use client"
 
-import { ChevronDown, CircleUserRound, Frown } from "lucide-react"
+import { useState } from "react"
 import useSWR from "swr"
+import { CircleUserRound } from "lucide-react"
 
 import { Navbar } from "@/shared/components/ui/Navbar"
 import { GameCard } from "@/shared/components/GameCard"
 import { fetcher } from "@/shared/libs"
-import { useState } from "react"
 
 interface ProfilePageProps {
   username: string
@@ -140,7 +140,6 @@ export function ProfilePage({ username }: ProfilePageProps) {
           <div className="mb-6 flex lg:items-center flex-col lg:flex-row justify-between">
             <div className="flex items-center gap-x-4">
               <h3 className="text-lg font-semibold ">All games</h3>
-              
             </div>
             {allGamesList.items.length >= 5 && (
               <span
@@ -168,7 +167,6 @@ export function ProfilePage({ username }: ProfilePageProps) {
           <div className="mb-6 flex lg:items-center flex-col lg:flex-row justify-between">
             <div className="flex items-center gap-x-4">
               <h3 className="text-lg font-semibold">Current playing</h3>
-           
             </div>
             {playingGamesList.items.length >= 5 && (
               <span
@@ -196,7 +194,6 @@ export function ProfilePage({ username }: ProfilePageProps) {
           <div className="mb-6 flex lg:items-center flex-col lg:flex-row justify-between">
             <div className="flex items-center gap-x-4">
               <h3 className="text-lg font-semibold">Finished games</h3>
-             
             </div>
             {finishedGamesList.items.length >= 5 && (
               <div

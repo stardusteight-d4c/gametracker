@@ -1,4 +1,5 @@
 import { useRouter } from "next/navigation"
+
 import { useAuth } from "@/shared/hooks/useAuth"
 
 export function useNavbar() {
