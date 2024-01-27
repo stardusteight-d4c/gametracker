@@ -1,12 +1,12 @@
 "use client"
 
-import { useState } from "react"
-import useSWR from "swr"
 import { CircleUserRound } from "lucide-react"
+import useSWR from "swr"
 
 import { Navbar } from "@/shared/components/ui/Navbar"
 import { GameCard } from "@/shared/components/GameCard"
 import { fetcher } from "@/shared/libs"
+import { useState } from "react"
 
 interface ProfilePageProps {
   username: string
