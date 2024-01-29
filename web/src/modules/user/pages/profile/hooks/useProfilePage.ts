@@ -47,16 +47,19 @@ export function useProfilePage({ username }: { username: string }) {
     setViewAll(category)
   }
 
+  const isLoading =
+    isLoadingUser ||
+    isLoadingAllGames ||
+    isLoadingPlayingGames ||
+    isLoadingFinishedGames
+
   return {
     user,
     viewAll,
+    isLoading,
     allGamesList,
     playingGamesList,
     finishedGamesList,
     handleViewAll,
-    isLoadingUser,
-    isLoadingAllGames,
-    isLoadingPlayingGames,
-    isLoadingFinishedGames,
   }
 }
