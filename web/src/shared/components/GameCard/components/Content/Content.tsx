@@ -11,7 +11,7 @@ interface ContentProps {
 export function Content({ coverUrl, title, score }: ContentProps) {
   return (
     <div className="lg:w-[196px] col-span-1 rounded flex flex-col cursor-pointer">
-      <div className="lg:w-[196px] h-[245px] lg:h-[265px] relative rounded border border-dark-str/10 overflow-hidden">
+      <div className="lg:w-[196px] h-[245px] lg:h-[265px] relative rounded border border-dark-low/30 overflow-hidden">
         {coverUrl && isValidURL(coverUrl) ? (
           <img
             src={coverUrl}
@@ -23,7 +23,7 @@ export function Content({ coverUrl, title, score }: ContentProps) {
             <FileX className="w-[50px] h-[50px] text-dark-low" />
           </div>
         )}
-        <div className="absolute bottom-0 left-0 bg-dark-str/10 backdrop-blur-sm px-1 py-2 rounded-tr flex items-center justify-between">
+        <div className="absolute bottom-0 left-0 bg-dark-str/30 shadow-md shadow-black/80 backdrop-blur-sm px-1 py-2 rounded-tr flex items-center justify-between">
           <div className="flex flex-col-reverse items-center mt-1 gap-[6px] z-50">
             {Array.from({ length: score }).map((_, index) => (
               <div key={index} className="relative">
