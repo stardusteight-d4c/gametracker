@@ -34,9 +34,9 @@ export function Header({ user, allGamesList }: HeaderProps) {
             <span className="text-sm">Member since</span>
           </div>
         </div>
-        <div className="flex items-center gap-x-2 group cursor-pointer">
+        <div className="flex items-center gap-x-2">
           <CircleUserRound size={32} />
-          <span className="text-lg font-medium cursor-pointer">
+          <span className="text-lg font-medium">
             {user.username}
           </span>
         </div>

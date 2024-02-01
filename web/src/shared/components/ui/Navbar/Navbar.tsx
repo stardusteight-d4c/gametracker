@@ -10,8 +10,8 @@ import {
   X,
 } from "lucide-react"
 
-import { useSearch } from "./hooks/useSearch"
-import { useNavbar } from "./hooks/useNavbar"
+import { useSearch, useNavbar } from "./hooks"
+import { MobileSearch } from "./components/MobileSearch/MobileSearch"
 
 interface NavbarProps {
   search?: boolean
@@ -24,7 +24,14 @@ export const Navbar = ({
   signIn = true,
   back = false,
 }: NavbarProps) => {
-  const { handleChange, searchTerm, clearSearch, result } = useSearch()
+  const {
+    handleChange,
+    searchTerm,
+    clearSearch,
+    result,
+    makeSearch,
+    handleMakeSearch,
+  } = useSearch()
   const { session, onLogout } = useNavbar()
 
   return (
@@ -45,7 +52,7 @@ export const Navbar = ({
           </Link>
         )}
         {search && (
-          <div className="hidden md:block relative h-fit w-fit ml-10">
+          <div className="hidden md:block relative z-[1000] h-fit w-fit ml-10">
             <input
               type="text"
               placeholder="Search for a user"
@@ -86,7 +93,12 @@ export const Navbar = ({
         {session && (
           <div className="flex items-center gap-x-2 md:gap-x-4">
             <div className="flex md:hidden hover:bg-light-str/10 rounded transition-all h-[30px] active:scale-95 px-1 text-light-str items-center w-fit gap-x-2 cursor-pointer">
-              <Search />
+              {makeSearch ? (
+                <X onClick={handleMakeSearch} />
+              ) : (
+                <Search onClick={handleMakeSearch} />
+              )}
+              {makeSearch && <MobileSearch />}
             </div>
             <Link
               href="/games/manage"

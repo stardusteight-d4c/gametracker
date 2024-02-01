@@ -4,6 +4,7 @@ import { useDebounce } from "@/shared/hooks/useDebounce"
 export function useSearch() {
   const [result, setResult] = useState<UserDTO[]>([])
   const [searchTerm, setSearchTerm] = useState<string>("")
+  const [makeSearch, setMakeSearch] = useState<boolean>(false)
   const debouncedValue = useDebounce<string>(searchTerm, 500)
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -32,10 +33,16 @@ export function useSearch() {
     setResult([])
   }
 
+  function handleMakeSearch() {
+    setMakeSearch(!makeSearch)
+  }
+
   return {
     searchTerm,
-    clearSearch,
-    handleChange,
     result,
+    makeSearch,
+    clearSearch,
+    handleMakeSearch,
+    handleChange,
   }
 }

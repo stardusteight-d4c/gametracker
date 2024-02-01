@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server"
 
-import { useAuth } from "./shared/hooks/useAuth"
-import { HandleRedirect } from "./shared/utils/handleRedirect"
+import { HandleRedirect } from "./shared/utils"
+import { useAuth } from "./shared/hooks"
 
 export default function middleware(req: NextRequest) {
   const { getServerUserSession } = useAuth()
