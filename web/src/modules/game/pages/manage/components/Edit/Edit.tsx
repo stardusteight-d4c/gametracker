@@ -4,8 +4,7 @@ import { ChevronDown, Search, X } from "lucide-react"
 
 import { scoreRank } from "@/shared/utils"
 
-import { useSearch } from "./hooks/useSearch"
-import { useEdit } from "./hooks/useEdit"
+import { useSearch, useEdit } from "./hooks"
 
 export function Edit() {
   const {

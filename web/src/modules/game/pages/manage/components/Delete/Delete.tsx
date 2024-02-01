@@ -1,18 +1,13 @@
 "use client"
 
 import { Search, X } from "lucide-react"
-import { useSearch } from "./hooks/useSearch"
-import { useDelete } from "./hooks/useDelete"
-import { GameCard } from "@/shared/components/GameCard"
+
+import { GameCard } from "@/shared/components/generics"
+
+import { useSearch, useDelete } from "./hooks"
 
 export function Delete() {
-  const {
-    formData,
-    selectedGame,
-    handlers,
-    onSubmit,
-    isMutating,
-  } = useDelete()
+  const { formData, selectedGame, handlers, onSubmit, isMutating } = useDelete()
   const { handleChange, searchTerm, clearSearch, result } = useSearch()
 
   return (

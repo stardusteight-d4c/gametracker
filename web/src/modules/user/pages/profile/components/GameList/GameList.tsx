@@ -1,4 +1,4 @@
-import { GameCard } from "@/shared/components/GameCard"
+import { GameCard } from "@/shared/components/generics"
 
 interface GameListProps {
   data: PaginationDTO<GameDTO>

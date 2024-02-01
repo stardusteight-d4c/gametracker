@@ -1,11 +1,9 @@
-import { useRouter } from "next/navigation"
 import { useState } from "react"
+import { useRouter } from "next/navigation"
 import useSWRMutation from "swr/mutation"
 
-import { useToast } from "@/shared/hooks/useToast"
-import { getFormattedCurrentDate } from "@/shared/utils"
-import { useAuth } from "@/shared/hooks/useAuth"
-import { isEmail } from "@/shared/utils/isEmail"
+import { useToast, useAuth } from "@/shared/hooks"
+import { getFormattedCurrentDate, isEmail } from "@/shared/utils"
 
 export function useSignIn() {
   const router = useRouter()

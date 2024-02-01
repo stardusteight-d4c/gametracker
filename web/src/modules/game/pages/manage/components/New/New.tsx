@@ -2,9 +2,9 @@
 
 import { ChevronDown } from "lucide-react"
 
-import { scoreRank } from "@/shared/utils/scoreRank"
+import { scoreRank } from "@/shared/utils"
 
-import { useNew } from "./hooks/useNew"
+import { useNew } from "./hooks"
 
 export function New() {
   const { formData, openDropdown, handlers, onSubmit, isMutating } = useNew()
