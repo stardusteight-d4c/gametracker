@@ -19,7 +19,7 @@ export function Delete() {
             placeholder="Search for a game"
             value={searchTerm}
             onChange={handleChange}
-            className="px-8 w-[300px] py-2 rounded outline-none border border-dark-mid/10 focus:border-[#FF003F]"
+            className="px-8 w-full py-2 rounded outline-none border border-dark-mid/10 focus:border-[#FF003F]"
           />
           <Search className="absolute left-1 top-1/2 -translate-y-1/2 text-dark-low" />
           {result.length > 0 && searchTerm && (
@@ -44,8 +44,14 @@ export function Delete() {
         </div>
       )}
       {selectedGame && (
-        <div className="flex flex-col mt-4 items-center justify-center">
-          <GameCard coverUrl={formData.coverUrl} title={formData.title} />
+        <div className="flex flex-col mt-8 md:mt-4 items-center justify-center">
+          <div className="max-w-[200px]">
+            <GameCard
+              coverUrl={formData.coverUrl}
+              title={formData.title}
+              score={formData.score}
+            />
+          </div>
           <button
             onClick={onSubmit}
             className="flex w-full mt-4 font-semibold items-center justify-center h-[29px] p-5 gap-x-1 active:scale-95 transition-all text-light-str bg-gradient-to-t from-[#D5224E] to-[#FF003F] rounded"

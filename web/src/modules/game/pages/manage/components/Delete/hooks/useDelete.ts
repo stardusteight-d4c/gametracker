@@ -1,9 +1,10 @@
-import { toast } from "@/shared/components/ui/Toaster/components/Toast/hooks/use-toast"
-import { useAuth } from "@/shared/hooks/useAuth"
-import { getFormattedCurrentDate, isValidURL } from "@/shared/utils"
-import { useRouter } from "next/navigation"
 import { useState } from "react"
 import useSWRMutation from "swr/mutation"
+import { useRouter } from "next/navigation"
+
+import { useAuth } from "@/shared/hooks"
+import { getFormattedCurrentDate } from "@/shared/utils"
+import { toast } from "@/shared/components/ui/Toaster/components/Toast/hooks/use-toast"
 
 export function useDelete() {
   const router = useRouter()

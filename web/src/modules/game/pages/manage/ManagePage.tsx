@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Pencil, Send, Trash } from "lucide-react"
 
 import { New, Edit, Delete } from "./components"
@@ -9,6 +9,15 @@ import { Navbar } from "@/shared/components/ui/Navbar"
 
 export function ManagePage() {
   const [activeMode, setActiveMode] = useState<"new" | "edit" | "delete">("new")
+  const [mounted, setMounted] = useState<boolean>(false)
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  if (!mounted) {
+    return null
+  }
 
   return (
     <main className="w-screen min-h-screen">

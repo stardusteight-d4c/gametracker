@@ -26,7 +26,7 @@ export function Edit() {
             placeholder="Search for a game"
             value={searchTerm}
             onChange={handleChange}
-            className="px-8 w-[300px] py-2 rounded outline-none border border-dark-mid/10 focus:border-[#FF003F]"
+            className="px-8 w-full py-2 rounded outline-none border border-dark-mid/10 focus:border-[#FF003F]"
           />
           <Search className="absolute left-1 top-1/2 -translate-y-1/2 text-dark-low" />
           {result.length > 0 && searchTerm && (
