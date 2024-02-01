@@ -15,12 +15,12 @@ async function bootstrap() {
     new FastifyAdapter()
   )
 
+  app.enableCors(corsOptions)
+
   app.register(fastifyCookie, {
     secret: process.env.FASTIFY_COOKIE_SECRET,
     parseOptions: {},
   } as FastifyCookieOptions)
-
-  app.enableCors(corsOptions)
 
   app.listen(process.env.PORT, "0.0.0.0").then(() => {
     console.log("🚀 Server running on port:", process.env.PORT)
