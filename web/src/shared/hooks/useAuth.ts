@@ -9,12 +9,13 @@ export function useAuth() {
   function getUserSession(): DecodedToken | null {
     const accessToken = !serverAccessToken && getCookie("accessToken")
     if (!accessToken) {
-      console.error("AccessToken cookie not found")
       return null
     }
 
     try {
-      const decodedToken = jwt.decode(serverAccessToken ?? accessToken) as DecodedToken
+      const decodedToken = jwt.decode(
+        serverAccessToken ?? accessToken
+      ) as DecodedToken
       return decodedToken
     } catch (error) {
       console.error("Error decoding AccessToken:", error)
@@ -25,7 +26,6 @@ export function useAuth() {
   function getServerUserSession(req: NextRequest): DecodedToken | null {
     const accessToken = req.cookies.get("accessToken")?.value
     if (!accessToken) {
-      console.error("AccessToken cookie not found")
       return null
     }
 
