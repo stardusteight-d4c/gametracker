@@ -1,6 +1,7 @@
 "use client"
 
 import { GameCard } from "@/shared/components/generics"
+import { Frown } from "lucide-react"
 import { useEffect, useState } from "react"
 
 interface GameListProps {
@@ -25,7 +26,7 @@ export function GameList({
   }
 
   function renderData() {
-    if (data && !isLoading) {
+    if (data && !isLoading && data.items.length > 0) {
       return data.items.map((game) => (
         <GameCard
           key={game.id}
@@ -34,6 +35,13 @@ export function GameList({
           score={game.score}
         />
       ))
+    }
+    if (data && !isLoading && data.items.length === 0) {
+      return (
+        <div className="text-2xl text-center w-[300px] h-[245px] lg:h-[265px] gap-y-2 flex items-center justify-center flex-col mx-auto font-medium col-span-2 sm:col-span-3 md:col-span-4 lg:col-span-5">
+          There are no games here yet <Frown size={34} />
+        </div>
+      )
     }
   }
 
