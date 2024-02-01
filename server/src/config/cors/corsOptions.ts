@@ -7,7 +7,7 @@ dotenv.config()
 const origin = process.env.ORIGIN
 
 export const corsOptions: CorsOptions = {
-  origin: "*",
+  origin: origin,
   credentials: true,
   methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
   exposedHeaders: ["Set-Cookie"],
