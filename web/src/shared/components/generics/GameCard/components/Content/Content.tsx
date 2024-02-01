@@ -1,4 +1,7 @@
+"use client"
+
 import { FileX } from "lucide-react"
+import { useState } from "react"
 
 import { isValidURL, scoreRank } from "@/shared/utils"
 
@@ -9,13 +12,20 @@ interface ContentProps {
 }
 
 export function Content({ coverUrl, title, score }: ContentProps) {
+  const [isValidImageUrl, setIsValidImageUrl] = useState<boolean>(true)
+
+  function handleImageError() {
+    setIsValidImageUrl(false)
+  }
+
   return (
     <div className="lg:w-[196px] col-span-1 rounded flex flex-col cursor-pointer">
       <div className="lg:w-[196px] h-[245px] lg:h-[265px] relative rounded border border-dark-low/30 overflow-hidden">
-        {coverUrl && isValidURL(coverUrl) ? (
+        {coverUrl && isValidURL(coverUrl) && isValidImageUrl ? (
           <img
             src={coverUrl}
-            alt=""
+            alt="cover/image"
+            onError={handleImageError}
             className="lg:w-[196px] w-full h-[245px] lg:h-[265px] object-fill transition-all"
           />
         ) : (
