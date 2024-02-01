@@ -1,4 +1,5 @@
-import { CircleUserRound, Link } from "lucide-react"
+import { CircleUserRound } from "lucide-react"
+import Link from "next/link"
 
 export function SignInButton() {
   return (
