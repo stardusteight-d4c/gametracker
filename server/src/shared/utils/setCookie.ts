@@ -16,7 +16,7 @@ export function setCookie({
   response.setCookie(name, value, {
     httpOnly,
     secure: true,
-    sameSite: "strict",
+    sameSite: "none",
     path: "/",
     maxAge: age,
   })
