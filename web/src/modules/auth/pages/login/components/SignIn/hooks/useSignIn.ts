@@ -9,7 +9,8 @@ export function useSignIn() {
   const router = useRouter()
   const { getUserSession } = useAuth()
   const { toast } = useToast()
-  const { trigger, isMutating } = useSWRMutation("users/auth/signIn", signIn)
+  const [isMutating, setIsMutating] = useState<boolean>(false)
+  // const { trigger, isMutating } = useSWRMutation("users/auth/signIn", signIn)
   const [formData, setFormData] = useState<SignInDTO>({
     type: "username",
     access: "",
@@ -47,13 +48,24 @@ export function useSignIn() {
   }
 
   async function onSubmit() {
+    setIsMutating(true)
     const formattedCurrentData = getFormattedCurrentDate()
     let result: ResponseDTO<null>
 
     if (isEmail(formData.access)) {
-      result = await trigger({ ...formData, type: "email" })
+      result = await signIn("users/auth/signIn", {
+        arg: {
+          ...formData,
+          type: "email",
+        },
+      })
     } else {
-      result = await trigger({ ...formData, type: "username" })
+      result = await signIn("users/auth/signIn", {
+        arg: {
+          ...formData,
+          type: "username",
+        },
+      })
     }
 
     if (result.error || result.statusCode === 500) {
@@ -72,7 +84,7 @@ export function useSignIn() {
     })
 
     const session = getUserSession()
-
+    setIsMutating(false)
     return router.replace(`/profile/${session?.username}`)
   }
 

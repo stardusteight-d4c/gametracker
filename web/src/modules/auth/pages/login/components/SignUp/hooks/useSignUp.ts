@@ -11,10 +11,11 @@ export function useSignUp() {
   const router = useRouter()
   const { getUserSession } = useAuth()
   const { toast } = useToast()
-  const { trigger, isMutating } = useSWRMutation(
-    "users/auth/signUp",
-    registerUser
-  )
+  const [isMutating, setIsMutating] = useState<boolean>(false)
+  // const { trigger, isMutating } = useSWRMutation(
+  //   "users/auth/signUp",
+  //   registerUser
+  // )
   const [formData, setFormData] = useState<SignUpDTO>({
     username: "",
     email: "",
@@ -34,6 +35,7 @@ export function useSignUp() {
     url: string,
     { arg }: { arg: SignUpDTO }
   ): Promise<ResponseDTO<null>> {
+    setIsMutating(true)
     const parsedBody = await fetch(
       `${process.env.NEXT_PUBLIC_BASE_API_URL}/${url}`,
       {
@@ -48,6 +50,7 @@ export function useSignUp() {
       const body = res.body ? await res.text() : null
       return body ? JSON.parse(body) : null
     })
+    setIsMutating(false)
     return parsedBody as ResponseDTO<null>
   }
 
@@ -90,10 +93,12 @@ export function useSignUp() {
       return
     }
 
-    const result = await trigger({
-      username: formData.username.trim(),
-      email: formData.email.trim(),
-      password: formData.password.trim(),
+    const result = await registerUser("users/auth/signUp", {
+      arg: {
+        username: formData.username.trim(),
+        email: formData.email.trim(),
+        password: formData.password.trim(),
+      },
     })
 
     if (result.error || result.statusCode === 500) {
