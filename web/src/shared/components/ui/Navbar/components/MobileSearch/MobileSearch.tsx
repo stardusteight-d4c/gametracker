@@ -5,7 +5,8 @@ import { Search, X } from "lucide-react"
 import { useSearch } from "../../hooks"
 
 export function MobileSearch() {
-  const { searchTerm, clearSearch, result, handleChange } = useSearch()
+  const { searchTerm, clearSearch, result, handleChange, handleMakeSearch } =
+    useSearch()
 
   return ReactDOM.createPortal(
     <div className="w-screen h-screen fixed inset-0 text-white bg-light-str/10 backdrop-blur-sm">
@@ -24,6 +25,7 @@ export function MobileSearch() {
               <div className="bg-white absolute inset-x-0 top-full mt-1 text-dark-str border border-dark-mid/10 rounded">
                 {result?.map((user) => (
                   <Link
+                    onClick={handleMakeSearch}
                     href={`/profile/${user.username}`}
                     className="hover:bg-light-str block px-2 py-1 cursor-pointer"
                   >
