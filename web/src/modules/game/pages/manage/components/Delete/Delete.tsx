@@ -53,6 +53,7 @@ export function Delete() {
             />
           </div>
           <button
+            disabled={isMutating}
             onClick={onSubmit}
             className="flex w-full mt-4 font-semibold items-center justify-center h-[29px] p-5 gap-x-1 active:scale-95 transition-all text-light-str bg-gradient-to-t from-[#D5224E] to-[#FF003F] rounded"
           >
