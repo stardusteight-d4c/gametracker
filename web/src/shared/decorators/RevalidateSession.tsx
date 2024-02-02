@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation"
 
 import { useAuth } from "../hooks/useAuth"
 import { toast } from "../components/ui/Toaster/components/Toast/hooks/use-toast"
-import { getFormattedCurrentDate } from "../utils"
+import { getFormattedCurrentDate, setCookie } from "../utils"
 
 function isTokenExpired(token: DecodedToken): boolean {
   const currentTimestamp: number = Math.floor(Date.now() / 1000)
@@ -39,6 +39,8 @@ export function RevalidateSession() {
           variant: "destructive",
         })
         router.replace("/login")
+      } else {
+        setCookie("accessToken", result.data.accessToken, 1)
       }
     }
   }

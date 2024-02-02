@@ -94,7 +94,10 @@ export class SignUp {
       message: "Registered successfully",
       error: null,
       statusCode: 201,
-      data: null,
+      data: {
+        accessToken,
+        refreshToken,
+      },
     })
   }
 }

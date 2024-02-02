@@ -113,7 +113,10 @@ export class SignIn {
       message: "Authenticated successfully",
       error: null,
       statusCode: 200,
-      data: null,
+      data: {
+        accessToken,
+        refreshToken,
+      },
     })
   }
 }

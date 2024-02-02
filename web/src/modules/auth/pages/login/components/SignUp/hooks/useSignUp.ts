@@ -3,7 +3,11 @@ import { useState } from "react"
 import useSWRMutation from "swr/mutation"
 
 import { useToast } from "@/shared/hooks/useToast"
-import { getFormattedCurrentDate, isUsernameValid } from "@/shared/utils"
+import {
+  getFormattedCurrentDate,
+  isUsernameValid,
+  setCookie,
+} from "@/shared/utils"
 import { useAuth } from "@/shared/hooks/useAuth"
 import { isEmail } from "@/shared/utils/isEmail"
 
@@ -11,11 +15,10 @@ export function useSignUp() {
   const router = useRouter()
   const { getUserSession } = useAuth()
   const { toast } = useToast()
-  const [isMutating, setIsMutating] = useState<boolean>(false)
-  // const { trigger, isMutating } = useSWRMutation(
-  //   "users/auth/signUp",
-  //   registerUser
-  // )
+  const { trigger, isMutating } = useSWRMutation(
+    "users/auth/signUp",
+    registerUser
+  )
   const [formData, setFormData] = useState<SignUpDTO>({
     username: "",
     email: "",
@@ -34,8 +37,7 @@ export function useSignUp() {
   async function registerUser(
     url: string,
     { arg }: { arg: SignUpDTO }
-  ): Promise<ResponseDTO<null>> {
-    setIsMutating(true)
+  ): Promise<ResponseDTO<{ accessToken: string; refreshToken: string }>> {
     const parsedBody = await fetch(
       `${process.env.NEXT_PUBLIC_BASE_API_URL}/${url}`,
       {
@@ -50,8 +52,10 @@ export function useSignUp() {
       const body = res.body ? await res.text() : null
       return body ? JSON.parse(body) : null
     })
-    setIsMutating(false)
-    return parsedBody as ResponseDTO<null>
+    return parsedBody as ResponseDTO<{
+      accessToken: string
+      refreshToken: string
+    }>
   }
 
   async function onSubmit() {
@@ -93,12 +97,10 @@ export function useSignUp() {
       return
     }
 
-    const result = await registerUser("users/auth/signUp", {
-      arg: {
-        username: formData.username.trim(),
-        email: formData.email.trim(),
-        password: formData.password.trim(),
-      },
+    const result = await trigger({
+      username: formData.username.trim(),
+      email: formData.email.trim(),
+      password: formData.password.trim(),
     })
 
     if (result.error || result.statusCode === 500) {
@@ -109,6 +111,10 @@ export function useSignUp() {
       })
       return
     }
+
+    // locally the cookie is being set, but in production it is not, and the header comes correctly
+    setCookie("accessToken", result.data.accessToken, 1)
+    setCookie("refreshToken", result.data.refreshToken, 30)
 
     toast({
       title: result.message,

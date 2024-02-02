@@ -64,7 +64,9 @@ export class RefreshToken {
       message: "Refresh successfully",
       error: null,
       statusCode: 200,
-      data: null,
+      data: {
+        accessToken: newAccessToken,
+      },
     })
   }
 }

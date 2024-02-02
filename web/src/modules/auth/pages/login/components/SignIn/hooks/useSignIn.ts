@@ -3,14 +3,13 @@ import { useRouter } from "next/navigation"
 import useSWRMutation from "swr/mutation"
 
 import { useToast, useAuth } from "@/shared/hooks"
-import { getFormattedCurrentDate, isEmail } from "@/shared/utils"
+import { getFormattedCurrentDate, isEmail, setCookie } from "@/shared/utils"
 
 export function useSignIn() {
   const router = useRouter()
   const { getUserSession } = useAuth()
   const { toast } = useToast()
-  const [isMutating, setIsMutating] = useState<boolean>(false)
-  // const { trigger, isMutating } = useSWRMutation("users/auth/signIn", signIn)
+  const { trigger, isMutating } = useSWRMutation("users/auth/signIn", signIn)
   const [formData, setFormData] = useState<SignInDTO>({
     type: "username",
     access: "",
@@ -29,7 +28,7 @@ export function useSignIn() {
   async function signIn(
     url: string,
     { arg }: { arg: SignInDTO }
-  ): Promise<ResponseDTO<null>> {
+  ): Promise<ResponseDTO<{ accessToken: string; refreshToken: string }>> {
     const parsedBody = await fetch(
       `${process.env.NEXT_PUBLIC_BASE_API_URL}/${url}`,
       {
@@ -44,27 +43,25 @@ export function useSignIn() {
       const body = res.body ? await res.text() : null
       return body ? JSON.parse(body) : null
     })
-    return parsedBody as ResponseDTO<null>
+    return parsedBody as ResponseDTO<{
+      accessToken: string
+      refreshToken: string
+    }>
   }
 
   async function onSubmit() {
-    setIsMutating(true)
     const formattedCurrentData = getFormattedCurrentDate()
-    let result: ResponseDTO<null>
+    let result: ResponseDTO<{ accessToken: string; refreshToken: string }>
 
     if (isEmail(formData.access)) {
-      result = await signIn("users/auth/signIn", {
-        arg: {
-          ...formData,
-          type: "email",
-        },
+      result = await trigger({
+        ...formData,
+        type: "email",
       })
     } else {
-      result = await signIn("users/auth/signIn", {
-        arg: {
-          ...formData,
-          type: "username",
-        },
+      result = await trigger({
+        ...formData,
+        type: "username",
       })
     }
 
@@ -83,8 +80,11 @@ export function useSignIn() {
       variant: "success",
     })
 
+    // locally the cookie is being set, but in production it is not, and the header comes correctly
+    setCookie("accessToken", result.data.accessToken, 1)
+    setCookie("refreshToken", result.data.refreshToken, 30)
+
     const session = getUserSession()
-    setIsMutating(false)
     return router.replace(`/profile/${session?.username}`)
   }
 
